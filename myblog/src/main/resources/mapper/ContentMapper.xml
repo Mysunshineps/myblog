@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.pj.dao.ContentsDao">
+	<select id="findContents" resultType="com.cy.pj.entity.Contents">
+		select cid,titlePic,from_unixtime(created) created,title,substr(content,1,70) content from contents
+	</select>
+	<select id="findPreContent" resultType="com.cy.pj.entity.Contents">
+		select * from contents where cid=(select max(cid) from contents where cid <![CDATA[ < ]]> #{cid})
+	</select>
+	<select id="findNextContent" resultType="com.cy.pj.entity.Contents">
+		select * from contents where cid=(select min(cid) from contents where cid>#{cid})
+	</select>
+	
+	<select id="findContentById" resultType="com.cy.pj.entity.Contents">
+		select  *from contents where cid=#{cid}
+	</select>
+		
+	<select id="findCollects" resultType="com.cy.pj.entity.Contents">
+		select cid,titlePic,from_unixtime(created) created,title,substr(content,1,70) content from contents
+		where cid in 
+		<foreach collection="list" item="contentId" open="(" separator="," close=")">
+			#{contentId}
+		</foreach>
+		 order by created desc
+	</select>
+	
+
+</mapper>
