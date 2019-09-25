@@ -5,4 +5,4 @@
 
 演示地址：http://www.psqweb.com:8888/dologin
 
-账号：user 密码：123456
+登陆账号：user 密码：123456
