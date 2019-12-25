@@ -1,6 +1,7 @@
 package com.cy.pj.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cy.pj.entity.Contents;
 import com.cy.pj.entity.User;
@@ -11,10 +12,10 @@ public interface UserService {
 		int doinsertObjects(User entity);
 	
 		//根据查询用户信息
-		public User doFindUser(String username);
+		User doFindUser(String username);
 		
 		//根据id修改用户信息
-		public Integer doUpdateObject(User entity);
+		Integer doUpdateObject(User entity);
 		
 		User findUserById(Integer id);
 		List<Contents> doFindAllContents();
@@ -27,5 +28,7 @@ public interface UserService {
 		String doCheck(Integer userId, Integer contentsId);
 
 		List<Contents> doFindAllCollect(Integer userId);
+
+		void uploadImage(Map<String, String> params);
 
 }

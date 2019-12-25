@@ -49,28 +49,25 @@
 	<div class="fh5co-loader"></div>
 
 	<div id="page">
-		<div id="fh5co-aside" style="background-image: url()">
+		<div id="fh5co-aside" style="background-image: url(#)">
 			<div class="overlay">
 				<ul>
 					<li class="dropdown user user-menu"
 						style="margin-top: 27px; margin-left: 50px;">
-						<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <!-- The user image in the navbar--> <img
-							id="myImgid" style="height: 30px; weight: 30px" src="#"
+						<a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">
+							<img id="myImgid" style="height: 30px; weight: 30px" src="#"
 							class="user-image" alt="User Image"> <span
 							class="hidden-xs"></span>
 					</a>
 
 
 						<ul class="dropdown-menu"
-							style="height: 288px; weight: 288px; background-image: url(images/pikaqiu.png); margin: 0px; padding: 0px">
-							<!-- The user image in the menu -->
+							style="height: 150px; weight: 288px; background-image: url(images/pikaqiu.png); margin: 0px; padding: 0px">
 							<li class="user-header"><img
 								style="height: 30px; weight: 30px" id="myImgid1" src="#"
 								class="img-circle" alt="User Image">
-								<p style="font-size: 24px">
-									<br />
-								</p></li>
+
 							<!-- Menu Body -->
 							<li class="user-body"></li>
 							<!-- Menu Footer-->
@@ -197,12 +194,10 @@
 			var params={"id":userId}
 			$.getJSON(url,params,function(result){
 				console.log(result);
-				//alert(result.username);
-				//$("#username").text(result.username);
 				var s = result.homeUrl;
 				$("#fh5co-aside").css("background-image","url(" + s + ")");
 				$("#myImgid").attr("src",result.headUrl);
-				$("#myImgid1").attr("src",result.headUrl);
+				$("#myImgid1").attr("src",result.homeUrl);
 			})
 		})
 		$(function(){

@@ -1,77 +1,70 @@
 package com.cy.pj.serviceimpl;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
+import java.util.Random;
 
-import javax.imageio.ImageIO;
-
+import com.cy.pj.entity.QiNiuProperties;
+import com.google.gson.Gson;
+import com.qiniu.common.Zone;
+import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cy.pj.dao.FileDao;
 import com.cy.pj.service.FileService;
 @Service
 public class FileServiceImpl implements FileService {
-	//本地路径
-	private String localFileDir="D:/jt-image/images/";
-	//云服务器路径
-	//private String localFileDir="/usr/local/src/image/";
 	@Autowired
-	private FileDao fileDao;
+	private QiNiuProperties qiNiuProperties;
+
 	@Override
 	public String upLoad(MultipartFile uploadFile) {
 		if(uploadFile ==null) {
-			return "old";
+			return "error";
 		}
-		System.err.println(uploadFile);
-		String filename = uploadFile.getOriginalFilename();
-		
-		filename = filename.toLowerCase();
-		
-		if(!filename.matches("^.+\\.(jpg|png|gif)$")) {
-			return "图片格式错误，请上传正确的图片";
-		}
-		
+		String filePath = "";
 		try {
-			BufferedImage bufferedImage = ImageIO.read(uploadFile.getInputStream());
-			int height = bufferedImage.getHeight();
-			int width = bufferedImage.getWidth();
-			if(height==0||width==0) {
-				return "图片内容错误，请上传正确的图片";
+			String fileName = uploadFile.getOriginalFilename();
+			String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+			String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
+			DefaultPutRet putRet = upload(uploadFile.getBytes(), newFileName);
+			filePath += qiNiuProperties.getBucketUrl() + putRet.key + ",";
+			if (filePath.endsWith(",")) {
+				filePath = filePath.substring(0, filePath.length() - 1);
 			}
-			
-			String dateDir = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-			//准备文件上传路径拼接
-			String localdir = localFileDir+dateDir;
-			File dirFile = new File(localdir);
-			if (!dirFile.exists()) {
-				dirFile.mkdirs();
-			}
-			
-			String uuid = UUID.randomUUID().toString().replace("-", "");
-			
-			String fileType = filename.substring(filename.lastIndexOf("."));
-			
-			String realFileName = uuid+fileType;
-			
-			String realPath = localdir+"/"+realFileName;
-			File realFilePath = new File(realPath);
-			uploadFile.transferTo(realFilePath);
-			System.out.println(realFilePath);
-			String str = "http://image.blog.com/"+dateDir+"/"+realFileName;	//本地路径-->利用nginx方向代理到本地路径(修改电脑hosts文件)
-			//String str = "http://www.web.com/"+dateDir+"/"+realFileName;//云服务器上的路径
-			System.out.println(str);
-			return str;
+
+			return filePath;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "上传失败";
+			return "error";
 		}
-		
-		
+
+	}
+
+	public DefaultPutRet upload(byte[] file, String key) throws Exception {
+		Auth auth = Auth.create(qiNiuProperties.getAccessKey(), qiNiuProperties.getSecretKey());
+		//第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
+		Zone z = Zone.autoZone();
+		Configuration c = new Configuration(z);
+		//创建上传对象
+		UploadManager uploadManager = new UploadManager(c);
+		Response res = uploadManager.put(file, key, getUpToken(auth, qiNiuProperties.getBucket()));
+		//打印返回的信息
+		System.out.println(res.bodyString());
+		//解析上传成功的结果
+		DefaultPutRet putRet = new Gson().fromJson(res.bodyString(), DefaultPutRet.class);
+		return putRet;
+	}
+
+	//简单上传，使用默认策略，只需要设置上传的空间名就可以了
+	public String getUpToken(Auth auth, String bucketname) {
+		return auth.uploadToken(bucketname);
 	}
 
 }

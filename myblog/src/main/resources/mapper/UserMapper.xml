@@ -44,11 +44,16 @@
         where id=#{id}
   
   </update>
-  
-  
-  
-  
-  
-  
+
+	<update id="uploadImage" parameterType="map">
+  	update user set
+		<if test="headUrl != null and source != ''">
+			head_url = #{headUrl}
+		</if>
+		<if test="homeUrl != null and source != ''">
+			,home_url = #{homeUrl}
+		</if>
+		where id =#{userId}
+	</update>
   
   </mapper>

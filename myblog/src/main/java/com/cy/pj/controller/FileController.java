@@ -14,15 +14,27 @@ import com.cy.pj.service.FileService;
 public class FileController {
 	@Autowired
 	private FileService fileService;
-	
-	//file/uload
-	
-	@RequestMapping(value = "/upload",method = RequestMethod.POST)
+
+
+	@RequestMapping(value = "/upload/headImage",method = RequestMethod.POST)
 	@ResponseBody
-	public String fileUpLoad(MultipartFile uploadFile) {
+	public String fileUpLoadHeadImage(MultipartFile uploadFile) {
 		String str=fileService.upLoad(uploadFile);
-		System.out.println("str:"+str);
-		return str;
+		if (str.equals("error")){
+			return "error";
+		}else {
+			return str;
+		}
 	}
-	
+
+	@RequestMapping(value = "/upload/homeImage",method = RequestMethod.POST)
+	@ResponseBody
+	public String fileUpLoadHomeImage(MultipartFile uploadFile) {
+		String str=fileService.upLoad(uploadFile);
+		if (str.equals("error")){
+			return "error";
+		}else {
+			return str;
+		}
+	}
 }

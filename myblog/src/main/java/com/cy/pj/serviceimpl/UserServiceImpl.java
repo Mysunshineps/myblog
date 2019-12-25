@@ -1,14 +1,12 @@
 package com.cy.pj.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,7 +24,7 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	@Autowired
 	private ContentsDao contentsDao;
-	
+
 	@Override
 	public int doinsertObjects(User entity) {
 		System.out.println(entity);
@@ -36,7 +34,7 @@ public class UserServiceImpl implements UserService{
 			throw new ServiceException("用户名不能为空");
 		if(StringUtils.isEmpty(entity.getPassword()))
 			throw new ServiceException("密码不能为空");
-		if(!entity.getPassword().equals(entity.getRepassword())) 
+		if(!entity.getPassword().equals(entity.getRepassword()))
 			throw new ServiceException("两次输入的密码不一致,请重新输入");
 		String salt=UUID.randomUUID().toString();
 		SimpleHash sh=new SimpleHash("MD5",entity.getPassword(),salt, 1);
@@ -58,7 +56,7 @@ public class UserServiceImpl implements UserService{
 		if(user==null) {
 			throw new ServiceException("该用户信息可能已经不存在,请尝试重新登录");
 		}
-		
+
 		return user;
 	}
 
@@ -68,33 +66,34 @@ public class UserServiceImpl implements UserService{
 	public Integer doUpdateObject(User entity) {
 		//1.参数的合法性验证
 		if(entity.getUsername()==null&&entity.getEmail()==null&&entity.getGender()==null
-			&&entity.getHeadUrl()==null&&entity.getHomeUrl()==null&&entity.getPassword()==null&&entity.getRepassword()==null)
+				&&entity.getHeadUrl()==null&&entity.getHomeUrl()==null&&entity.getPassword()==null&&entity.getRepassword()==null) {
 			throw new IllegalArgumentException("用户信息的任意一项不能为空");
+		}
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		SimpleHash sh=new SimpleHash("MD5",entity.getPassword(),user.getSalt(),1);
-				if(!user.getPassword().equals(sh.toHex()))
-				throw new IllegalArgumentException("原密码不正确");
-				//3.对新密码进行加密
-				String salt=UUID.randomUUID().toString();
-				sh=new SimpleHash("MD5",entity.getRepassword(),salt, 1);
-				
-				//4.将新密码加密以后的结果更新到数据库
-				
-				entity.setPassword(sh.toHex());
-				
-				entity.setSalt(salt);
-				System.out.println("2.UserServiceImpl"+entity);
-				int rows;
-				if(entity.getHeadUrl().equals("old")&&entity.getHomeUrl().equals("old")) {
-					rows = userDao.doNoupdateHome(entity);
-				}else {
-					rows=userDao.doUpdateObject(entity);
-				}
-				if(rows==0)
-				throw new ServiceException("修改失败");
-				return rows;
+		if(!user.getPassword().equals(sh.toHex()))
+			throw new IllegalArgumentException("原密码不正确");
+		//3.对新密码进行加密
+		String salt=UUID.randomUUID().toString();
+		sh=new SimpleHash("MD5",entity.getRepassword(),salt, 1);
+
+		//4.将新密码加密以后的结果更新到数据库
+
+		entity.setPassword(sh.toHex());
+
+		entity.setSalt(salt);
+		int rows;
+		if(entity.getHeadUrl().equals("error")&&entity.getHomeUrl().equals("error")) {
+			rows = userDao.doNoupdateHome(entity);
+		}else {
+			rows=userDao.doUpdateObject(entity);
+		}
+		if(rows==0) {
+			throw new ServiceException("修改失败");
+		}
+		return rows;
 	}
-	
+
 	@Override
 	public User findUserById(Integer id) {
 		return userDao.findUserById(id);
@@ -103,15 +102,15 @@ public class UserServiceImpl implements UserService{
 	public List<Contents> doFindAllContents() {
 		return contentsDao.findContents();
 	}
-	
-	
+
+
 	//头像上传功能
 	@Override
 	public int addImage(String username, String sqlPath) {
 		int rows = userDao.addImage(username, sqlPath);
 		return rows;
 	}
-	
+
 	//收藏功能
 	@Override
 	public String doinsertCollect(Integer userId, Integer contentsId) {
@@ -131,7 +130,7 @@ public class UserServiceImpl implements UserService{
 				return "已取消收藏";
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -148,6 +147,11 @@ public class UserServiceImpl implements UserService{
 		List<Integer> contentIds = contentsDao.findContentsByuserId(userId);
 		System.err.println("contentIds:"+contentIds);
 		return contentsDao.findCollects(contentIds);
+	}
+
+	@Override
+	public void uploadImage(Map<String, String> params) {
+		userDao.uploadImage(params);
 	}
 
 
