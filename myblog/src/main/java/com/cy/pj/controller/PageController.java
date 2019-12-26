@@ -48,7 +48,7 @@ public class PageController {
 	//跳转到评论
 	@RequestMapping("doPingLun")
 	public String doPingLun() {
-		return "pinglun";
+		return "comment";
 	}
 	
 	//跳转到高德地图定位

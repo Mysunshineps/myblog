@@ -109,7 +109,6 @@ public class UserController {
 		@RequestMapping("doFindAllContents")
 		@ResponseBody
 		public List<Contents> doFindAllContents() {	
-			//System.err.println(userService.findContents(id).toString());
 			return userService.doFindAllContents();
 			}
 		

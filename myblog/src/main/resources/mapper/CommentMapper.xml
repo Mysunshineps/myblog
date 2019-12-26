@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.cy.pj.dao.CommentDao">
-  
-  <insert id="doInsertComment"
-  		parameterType="com.cy.pj.entity.Comment"
-  		useGeneratedKeys="true"
-		keyProperty="coid">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.pj.dao.CommentDao">
+
+	<insert id="doInsertComment"
+			parameterType="com.cy.pj.entity.Comment"
+			useGeneratedKeys="true"
+			keyProperty="coid">
   		insert into comments
-  		(cid,author,created,content,mail,url)
+  		(cid,author,created,content,mail,url,userId)
   		values
-  		(#{cid},#{author},#{created},#{content},#{mail},#{url})
+  		(#{cid},#{author},#{created},#{content},#{mail},#{url},#{userId})
   </insert>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  </mapper>
+
+
+	<select id="findCommentsByUserId" resultType="com.cy.pj.entity.CommentTemp">
+		SELECT a.coid,a.cid,b.title,substr(a.content,1,100) content,a.created from comments a LEFT JOIN contents b ON a.cid = b.cid where a.userId = #{userId} ORDER BY a.created DESC
+	</select>
+
+
+
+
+
+
+
+
+
+</mapper>

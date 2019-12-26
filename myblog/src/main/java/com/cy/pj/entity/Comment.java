@@ -26,7 +26,7 @@ public class Comment implements Serializable {
     /**
      * 评论生成时的GMT unix时间戳-->后来为了方便改成date类型了
      */
-    private Date created;
+    private String created;
     /**
      * 评论作者
      */
@@ -72,6 +72,10 @@ public class Comment implements Serializable {
      * 评论内容
      */
     private String content;
-	
+
+    /**
+     *  user的主键ID
+     */
+    private Long userId;
 	
 }

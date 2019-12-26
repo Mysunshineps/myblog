@@ -109,9 +109,7 @@
 						</div>
 
 					</div>
-					<ul>
-						<li id="commented"></li>
-					</ul>
+					<p id="commented"></p>
 
 
 				</div>
@@ -302,8 +300,8 @@
 		function submitComment() {
 			var userId = getCookie("userId");//在本页面中取Cookie中userId的值
 			var cid = getCookie("cid");
-			//alert(userId);
 			var params = {
+				userId : userId,
 				author : $("#authorId").val(),
 				mail : $("#mailId").val(),
 				content : $("#contentId").val(),
@@ -485,11 +483,15 @@
 			var url = "/comment/doCommentedById"
 			var params ={};
 			params['cid'] = cid;
-			//alert("查询的评论历史数据"+cid);
 			$.getJSON(url, params, function(result){
 				//查询的评论历史数据
-				$("#commented").text("历史评论："+result.data);
-				
+				var data = result.data;
+				var html = '<ul>';
+				for (var i=0;i<data.length;i++){
+					html += '<li>'+data[i]+'</li>';
+				}
+				html += '</ul>';
+				$("#commented").html(html);
 			})
 		}
 		

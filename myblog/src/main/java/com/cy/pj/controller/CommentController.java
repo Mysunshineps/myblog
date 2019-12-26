@@ -1,10 +1,13 @@
 package com.cy.pj.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.cy.pj.entity.CommentTemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +35,32 @@ public class CommentController {
 	@RequestMapping("doCommentedById")
 	@ResponseBody
 	public JsonResult doCommentedById(Integer cid) {
-		List<String> list= commentService.doCommentedById(cid);
-		System.err.println("查询的评论历史数据："+list);
-		return new JsonResult(list);
+		List<Map<String,Object>> list= commentService.doCommentedById(cid);
+		List<String> commentList = new ArrayList<>();
+		for (int i=0; i<list.size();i++){
+			Map<String, Object> map = list.get(i);
+			commentList.add("历史评论["+map.get("created")+"]："+map.get("content"));
+		}
+		return new JsonResult(commentList);
 	}
-	
-	
+
+	@RequestMapping("doFindAllComment")
+	@ResponseBody
+	public List<CommentTemp> doFindAllComment(Integer userId) {
+		List<CommentTemp> commentTempList = commentService.findCommentsByUserId(userId);
+		return commentTempList;
+	}
+
+	@RequestMapping("deleteComment")
+	@ResponseBody
+	public JsonResult deleteComment(Integer coid) {
+		int i = commentService.deleteComment(coid);
+		if (i > 0){
+			return new JsonResult();
+		}else {
+			return new JsonResult("error");
+		}
+	}
 	
 	
 }

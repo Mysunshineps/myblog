@@ -145,7 +145,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<Contents> doFindAllCollect(Integer userId) {
 		List<Integer> contentIds = contentsDao.findContentsByuserId(userId);
-		System.err.println("contentIds:"+contentIds);
 		return contentsDao.findCollects(contentIds);
 	}
 
