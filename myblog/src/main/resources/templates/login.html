@@ -19,34 +19,18 @@
 				<input type="password" id="passwordId" name="password"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入你的密码';}">
 				<div class="submit"><input id="userlogin" type="button" value="Sign in" ></div>
 				<div class="clear"></div>
-				<div class="buttons">
-					<ul>
-						<li><a href="#" class="hvr-sweep-to-right">Sign in with Facebook</a></li>
-						<li><a href="#" class="hvr-sweep-to-left">Sign in with Twitter</a></li>
-						<div class="clear"></div>
-					</ul>
-				</div>
 				<div class="new">
 					<p><a href="#">Forgot Password ?</a></p>
 					<p class="sign">New here ?<a onclick="register(this)" href="#"> Sign Up</a></p>
-					<div class="clear"></div>
 				</div>
 			</form>
 		</div>
-	<!--start-copyright-->
-   		<div class="copy-right">
-				<p>Copyright &copy; 2015.Company name All rights reserved.<a target="_blank" href="http://www.cssmoban.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a> - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></p>
-		</div>
-	<!--//end-copyright-->
-	
-	
-	
+
 	<!-- 新加的函数:登陆认证到主页 -->
 <script type="text/javascript">
 	$(function(){
 		$("#userlogin").click(doLogin);
 	})
-	//7.24ZT整合
 	function doZtFind(){
 		console.log("该方法执行了");
 		var url="user/doFindUser";
