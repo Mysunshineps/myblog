@@ -49,7 +49,7 @@
 	<div class="fh5co-loader"></div>
 
 	<div id="page">
-		<div id="fh5co-aside" style="background-image: url()">
+		<div id="fh5co-aside" style="background-image: url(#)">
 			<div class="overlay">
 				<ul>
 					<li class="dropdown user user-menu"
@@ -63,20 +63,11 @@
 
 
 						<ul class="dropdown-menu"
-							style="height: 288px; weight: 288px; background-image: url(images/pikaqiu.png); margin: 0px; padding: 0px">
-							<!-- The user image in the menu -->
-							<li class="user-header"><img
-								style="height: 30px; weight: 30px" id="myImgid1" src="#"
-								class="img-circle" alt="User Image">
-								<p style="font-size: 24px">
-									<br />
-								</p></li>
-							<!-- Menu Body -->
-							<li class="user-body"></li>
+							style="height: 45px; weight: 160px; background-image: url(images/pikaqiu.png); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;margin: 0px; padding: 0px">
 							<!-- Menu Footer-->
 							<li class="user-footer">
 								<div class="pull-left" style="weight: 33%;">
-									<a href="doPre" class="btn btn-default btn-update"
+									<a href="doPre" class="btn btn-default"
 										style="font-color: black; background-color: red">返回</a>
 								</div>
 							</li>
@@ -185,7 +176,6 @@
 				var s = result.homeUrl;
 				$("#fh5co-aside").css("background-image","url(" + s + ")");
 				$("#myImgid").attr("src",result.headUrl);
-				$("#myImgid1").attr("src",result.headUrl);
 			})
 		})
 		$(function(){

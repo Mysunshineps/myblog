@@ -433,7 +433,7 @@ h1, h2, h3, h4, h5, h6, figure {
 	}
 
 	a {
-		color: rgba(255,255,255,.5);
+		color: rgba(255,255,255,1);
 		&:hover {
 			color: $brand-white;
 		}
@@ -475,7 +475,7 @@ h1, h2, h3, h4, h5, h6, figure {
 		}
 		> span {
 			display: block;
-			color: rgba(255,255,255,.5);
+			color: rgba(255,255,255,0.5);
 			text-transform: uppercase;
 			font-size: 15px;
 			letter-spacing: .05em;
