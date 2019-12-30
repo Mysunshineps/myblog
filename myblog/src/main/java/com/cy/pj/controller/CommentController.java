@@ -39,7 +39,7 @@ public class CommentController {
 		List<String> commentList = new ArrayList<>();
 		for (int i=0; i<list.size();i++){
 			Map<String, Object> map = list.get(i);
-			commentList.add("历史评论["+map.get("created")+"]："+map.get("content"));
+			commentList.add(map.get("username")+"["+map.get("created")+"]："+map.get("content"));
 		}
 		return new JsonResult(commentList);
 	}

@@ -60,8 +60,8 @@
 				</ul>
 			</nav>
 			<div class="page-title">
-				<img id="titlePic" src="" alt="Free HTML5 by FreeHTMl5.co"> <span>2019-07-23
-					10:33:58</span>
+				<img id="titlePic" src="" alt="Free HTML5 by FreeHTMl5.co">
+				<span id="createdtime"></span>
 				<h2 id="title"></h2>
 			</div>
 		</div>
@@ -109,13 +109,13 @@
 						</div>
 
 					</div>
+					<span style="color: red">评论区：</span>
 					<p id="commented"></p>
-
 
 				</div>
 				<!-- 点击评论按钮显示信息 -->
 				<div id="respond" class="comment-respond" style="display: none">
-					<h3 id="reply-title" class="comment-reply-title">评论区</h3>
+					<h3 id="reply-title" class="comment-reply-title">留下你的足迹</h3>
 					<form action="single.html" method="post" id="commentform"
 						class="comment-form" novalidate>
 						<div class="row">
@@ -275,7 +275,7 @@
 		}
 		
 		function setCookie(name, value) {
-			var Days = 30;
+			var Days = 7;
 			var exp = new Date();
 			exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
 			document.cookie = name + "=" + escape(value) + ";expires="
@@ -446,7 +446,7 @@
 				var s = result.titlePic;
 				$("#fh5co-aside").css("background-image", "url(" + s + ")");
 				$("#title").text(result.title);
-				$("#current").text(result.created);
+				$("#createdtime").text(result.created);
 				$("#titlePic").attr("src", result.titlePic);
 				$("#content").text(result.content);
 				setCookie("cid", result.cid);
@@ -519,13 +519,6 @@
 				return null;
 		}
 
-		function setCookie(name, value) {
-			var Days = 30;
-			var exp = new Date();
-			exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-			document.cookie = name + "=" + escape(value) + ";expires="
-					+ exp.toGMTString();
-		}
 	</script>
 
 

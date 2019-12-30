@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="findContentById" resultType="com.cy.pj.entity.Contents">
-		select  *from contents where cid=#{cid}
+		select cid,title,titlePic,content,FROM_UNIXTIME(created,'%Y-%m-%d %H:%i:%s') as created from contents where cid=#{cid}
 	</select>
 		
 	<select id="findCollects" resultType="com.cy.pj.entity.Contents">

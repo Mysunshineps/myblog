@@ -24,15 +24,7 @@ public class ContentsServiceImpl implements ContentsService{
 	private RedisTemplate redisTemplate;
 	@Override
 	public Contents findContentById(Integer cid) {
-		/*
-		 * String key="contents"+cid; ValueOperations operations =
-		 * redisTemplate.opsForValue(); boolean hasKey = redisTemplate.hasKey(key);
-		 * if(hasKey){ System.err.println("redis缓存里有数据直接取"); return (Contents)
-		 * operations.get(key); } System.err.println("redis缓存里没有数据从数据库里取"); //从数据库取
-		 */		
 		Contents contents=contentsDao.findContentById(cid);
-		//存入缓存
-		//operations.set(key, contents, 5,TimeUnit.HOURS);
 		return contents;
 	}
 	@Override
