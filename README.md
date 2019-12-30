@@ -1,6 +1,8 @@
 ### 个人博客：包括更换头像、支付打赏、评论、收藏、地图等功能->会持续更新版本
 
-服务器买的比较便宜，所以网页跳转与刷新有点慢请见谅，希望点个star
+数据库见：myblog\src\main\resources\blog.sql，直接用navicat导入可用，希望大家点个star
+
+服务器买的比较便宜，所以网页跳转与刷新有点慢请见谅
 
 演示地址：http://www.psqweb.com:8888/dologin
 
