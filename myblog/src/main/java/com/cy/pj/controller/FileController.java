@@ -21,7 +21,7 @@ public class FileController {
 	public String fileUpLoadHeadImage(MultipartFile uploadFile) {
 		String str=fileService.upLoad(uploadFile);
 		if (str.equals("error")){
-			return "error";
+			return "200";
 		}else {
 			return str;
 		}
@@ -32,7 +32,7 @@ public class FileController {
 	public String fileUpLoadHomeImage(MultipartFile uploadFile) {
 		String str=fileService.upLoad(uploadFile);
 		if (str.equals("error")){
-			return "error";
+			return "200";
 		}else {
 			return str;
 		}

@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService {
 			SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 			String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
 			DefaultPutRet putRet = upload(uploadFile.getBytes(), newFileName);
-			filePath += qiNiuProperties.getBucketUrl() + putRet.key + ",";
+			filePath += qiNiuProperties.getBucketUrl() + "/"+ putRet.key + ",";
 			if (filePath.endsWith(",")) {
 				filePath = filePath.substring(0, filePath.length() - 1);
 			}

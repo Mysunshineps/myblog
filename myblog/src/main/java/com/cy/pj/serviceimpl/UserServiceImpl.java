@@ -65,29 +65,25 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Integer doUpdateObject(User entity) {
 		//1.参数的合法性验证
-		if(entity.getUsername()==null&&entity.getEmail()==null&&entity.getGender()==null
-				&&entity.getHeadUrl()==null&&entity.getHomeUrl()==null&&entity.getPassword()==null&&entity.getRepassword()==null) {
-			throw new IllegalArgumentException("用户信息的任意一项不能为空");
+		if(entity.getUsername()==null&&entity.getPassword()==null) {
+			throw new IllegalArgumentException("用户名和原密码任意一项不能为空");
 		}
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		SimpleHash sh=new SimpleHash("MD5",entity.getPassword(),user.getSalt(),1);
-		if(!user.getPassword().equals(sh.toHex()))
+		if(!user.getPassword().equals(sh.toHex())) {
 			throw new IllegalArgumentException("原密码不正确");
-		//3.对新密码进行加密
-		String salt=UUID.randomUUID().toString();
-		sh=new SimpleHash("MD5",entity.getRepassword(),salt, 1);
-
-		//4.将新密码加密以后的结果更新到数据库
-
-		entity.setPassword(sh.toHex());
-
-		entity.setSalt(salt);
-		int rows;
-		if(entity.getHeadUrl().equals("error")&&entity.getHomeUrl().equals("error")) {
-			rows = userDao.doNoupdateHome(entity);
-		}else {
-			rows=userDao.doUpdateObject(entity);
 		}
+		//3.对新密码进行加密
+		if ((entity.getRepassword() != null) && (entity.getRepassword() !="")){
+			String salt=UUID.randomUUID().toString();
+			sh=new SimpleHash("MD5",entity.getRepassword(),salt, 1);
+			//4.将新密码加密以后的结果更新到数据库
+			entity.setPassword(sh.toHex());
+			entity.setSalt(salt);
+		}else {
+			entity.setPassword(sh.toHex());
+		}
+		int rows=userDao.doUpdateObject(entity);
 		if(rows==0) {
 			throw new ServiceException("修改失败");
 		}

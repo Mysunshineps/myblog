@@ -28,14 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/user/")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 	@RequestMapping("doLogin")
 	@ResponseBody
 	//用户名权限控制
 	public JsonResult doLogin(String username,
-			String password) {
+							  String password) {
 		//System.err.println("1.doLogin"+username+password);
 		//1.获取Subject对象
 		Subject subject=SecurityUtils.getSubject();
@@ -47,7 +47,7 @@ public class UserController {
 		//log.info("subject-----------"+subject);
 		return new JsonResult("登陆成功!");
 	}
-	
+
 	//初始化检查是否收藏，并显示到浏览器上
 	@RequestMapping("docheck")
 	@ResponseBody
@@ -55,7 +55,7 @@ public class UserController {
 		String check = userService.doCheck(userId,contentsId);
 		return new JsonResult(check);
 	}
-	
+
 	//收藏文章
 	@RequestMapping("doCollect")
 	@ResponseBody
@@ -65,7 +65,7 @@ public class UserController {
 		System.out.println(str);
 		return new JsonResult(str);
 	}
-	
+
 	@RequestMapping("doRegister")
 	@ResponseBody
 	public JsonResult doRegister(@Valid User entity) {
@@ -73,50 +73,56 @@ public class UserController {
 		userService.doinsertObjects(entity);
 		return new JsonResult("注册成功!");
 	}
-	
-	    //根据用户名查询用户信息并返回
-		@RequestMapping("doFindUser")
-		@ResponseBody
-		public JsonResult doFindUser(String username) {
-				String  newStingString= new JSONTokener(username).nextValue().toString();
-				System.out.println(newStingString);
-				return new JsonResult(userService.doFindUser(username));
-			}
-		
-	    //修改用户信息
-		@RequestMapping("doUpdateObject")
-		@ResponseBody	
-		public JsonResult doUpdateObject(User entity) {
-				userService.doUpdateObject(entity);
-				System.out.println("头像："+entity.getHeadUrl());
-				return new JsonResult("修改成功!");
-			}
-		
-			
-			
-			
-		@RequestMapping("doLoadIndexUI")
-			public String doLoadIndexUI() {
-				return "index";	
-			}
-		
-		@RequestMapping("doFindUserId")
-		@ResponseBody
-			public User doFindUserId(Integer id) {
-				return userService.findUserById(id);
-			}
-		
-		@RequestMapping("doFindAllContents")
-		@ResponseBody
-		public List<Contents> doFindAllContents() {	
-			return userService.doFindAllContents();
-			}
-		
-		@RequestMapping("doFindAllCollect")
-		@ResponseBody
-		public List<Contents> doFindAllCollect(Integer userId) {	
-			return userService.doFindAllCollect(userId);
-			}
-		
-	
+
+	//根据用户名查询用户信息并返回
+	@RequestMapping("doFindUser")
+	@ResponseBody
+	public JsonResult doFindUser(String username) {
+		String  newStingString= new JSONTokener(username).nextValue().toString();
+		System.out.println(newStingString);
+		return new JsonResult(userService.doFindUser(username));
+	}
+
+	//修改用户信息
+	@RequestMapping("doUpdateObject")
+	@ResponseBody
+	public JsonResult doUpdateObject(User entity) {
+		Integer row = userService.doUpdateObject(entity);
+		if (row >0){
+			return new JsonResult("修改成功!");
+		}else {
+			JsonResult jsonResult = new JsonResult();
+			jsonResult.setState(0);
+			jsonResult.setMessage("修改失败");
+			return jsonResult;
+		}
+	}
+
+
+
+
+	@RequestMapping("doLoadIndexUI")
+	public String doLoadIndexUI() {
+		return "index";
+	}
+
+	@RequestMapping("doFindUserId")
+	@ResponseBody
+	public User doFindUserId(Integer id) {
+		return userService.findUserById(id);
+	}
+
+	@RequestMapping("doFindAllContents")
+	@ResponseBody
+	public List<Contents> doFindAllContents() {
+		return userService.doFindAllContents();
+	}
+
+	@RequestMapping("doFindAllCollect")
+	@ResponseBody
+	public List<Contents> doFindAllCollect(Integer userId) {
+		return userService.doFindAllCollect(userId);
+	}
+
+
 }

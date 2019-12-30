@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.cy.pj.dao.UserDao">
-  	
-  	<!-- 插入注册数据 -->
-  	<insert id="insertObjects"
-  		parameterType="com.cy.pj.entity.User"
-  		useGeneratedKeys="true"
-		keyProperty="id">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.pj.dao.UserDao">
+
+	<!-- 插入注册数据 -->
+	<insert id="insertObjects"
+			parameterType="com.cy.pj.entity.User"
+			useGeneratedKeys="true"
+			keyProperty="id">
 		insert into user 
 		(id,username,password,
 		head_url,home_url,gender,email,salt)
@@ -18,23 +18,33 @@
 		#{headUrl},#{homeUrl},#{gender},
 		#{email},#{salt})
 		</insert>
- 
-	
+
+
 	<!-- 修改用户信息 -->
 	<update id="doUpdateObject">
-		update user set 
-		   username=#{username},
-           gender=#{gender},
-           head_url=#{headUrl},
-           home_url=#{homeUrl},
-           salt=#{salt},
-           email=#{email},
-           password=#{password}
-        where id=#{id}
+		update user set
+		username=#{username}
+		,password=#{password}
+		<if test="gender != null and gender != ''">
+			,gender=#{gender}
+		</if>
+		<if test="headUrl != null and headUrl != ''">
+			,head_url = #{headUrl}
+		</if>
+		<if test="homeUrl != null and homeUrl != ''">
+			,home_url = #{homeUrl}
+		</if>
+		<if test="salt != null and salt != ''">
+			,salt=#{salt}
+		</if>
+		<if test="email != null and email != ''">
+			,email=#{email}
+		</if>
+		where id=#{id}
 	</update>
-  
-  
-  <update id="doNoupdateHome">
+
+
+	<update id="doNoupdateHome">
   	update user set 
 		   username=#{username},
            gender=#{gender},
@@ -46,7 +56,7 @@
   </update>
 
 	<update id="uploadImage" parameterType="map">
-  	update user set
+		update user set
 		<if test="headUrl != null and source != ''">
 			head_url = #{headUrl}
 		</if>
@@ -55,5 +65,5 @@
 		</if>
 		where id =#{userId}
 	</update>
-  
-  </mapper>
+
+</mapper>

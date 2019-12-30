@@ -109,7 +109,7 @@
 		doInitFormData();
 		//事件注册
 		$(".box-footer").on("click", ".btn-cancel", doCancel)//为取消按钮注册点击事件
-		.on("click", ".btn-save", doSaveOrUpdate);//为保存按钮注册点击事件
+				.on("click", ".btn-save", doSaveOrUpdate);//为保存按钮注册点击事件
 	});
 
 
@@ -132,7 +132,7 @@
 			contentType: false,
 			async:false,//同步
 			success: function(result){
-				if(result != "error"){
+				if(result != "200"){
 					headUrl = result;
 				}
 			}
@@ -150,7 +150,7 @@
 			processData: false,
 			contentType: false,
 			success: function(result1){
-				if(result1 != "error"){
+				if(result1 != "200"){
 					homeUrl = result1;
 				}
 			}
@@ -170,10 +170,9 @@
 		var updateUrl = "user/doUpdateObject";
 		$.post(updateUrl, params, function(result) {
 			if (result.state == 1) {
-				alert(result.message);
 				doCancel();
-			} else {
-				alert(result.message);
+			}else {
+				alert("用户名和原密码任意一项都不能为空!");
 			}
 		})
 
