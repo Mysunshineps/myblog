@@ -19,6 +19,9 @@
 		#{email},#{salt})
 		</insert>
 
+	<select id="ifExistUserName" resultType="int">
+		select count(*) from user where username = #{userName}
+	</select>
 
 	<!-- 修改用户信息 -->
 	<update id="doUpdateObject">

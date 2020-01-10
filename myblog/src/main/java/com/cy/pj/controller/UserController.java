@@ -69,9 +69,17 @@ public class UserController {
 	@RequestMapping("doRegister")
 	@ResponseBody
 	public JsonResult doRegister(@Valid User entity) {
-		//System.out.println(entity);
-		userService.doinsertObjects(entity);
-		return new JsonResult("注册成功!");
+		JsonResult jsonResult = new JsonResult();
+		//判断是否存在此用户名
+		int i = userService.ifExistUserName(entity.getUsername());
+		if (i == 0) {
+			userService.doinsertObjects(entity);
+			jsonResult.setMessage("注册成功");
+			return jsonResult;
+		}else {
+			jsonResult.setState(2);
+			return new JsonResult("用户名重复,请更换用户名");
+		}
 	}
 
 	//根据用户名查询用户信息并返回

@@ -45,18 +45,20 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public int ifExistUserName(String userName) {
+		return userDao.ifExistUserName(userName);
+	}
+
+	@Override
 	public User doFindUser(String username) {
 		//1.参数的合法性验证
 		if(username==null)
 			throw new IllegalArgumentException("用户名不能为空");
 		//2.进行查询用户信息
 		User user = userDao.findUserByUserName(username);
-		System.out.println();
-		System.out.println(username);
 		if(user==null) {
 			throw new ServiceException("该用户信息可能已经不存在,请尝试重新登录");
 		}
-
 		return user;
 	}
 

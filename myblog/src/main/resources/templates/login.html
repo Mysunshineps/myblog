@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Signin</title>
-<link href="css/style_login.css" rel='stylesheet' type='text/css' />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="App Sign in Form,Login Forms,Sign up Forms,Registration Forms,News latter Forms,Elements"./>
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<title>Signin</title>
+	<link href="css/style_login.css" rel='stylesheet' type='text/css' />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="App Sign in Form,Login Forms,Sign up Forms,Registration Forms,News latter Forms,Elements"./>
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
 </head>
 <body>
-	<h1>Welcome to you</h1>
-		<div class="app-cam">
-			<div class="cam"><img src="images/cam.png" class="img-responsive" alt="" /></div>
-			<form>
-				<input type="text" id="usernameId" class="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入你的用户名';}" >
-				<input type="password" id="passwordId" name="password"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入你的密码';}">
-				<div class="submit"><input id="userlogin" type="button" value="Sign in" ></div>
-				<div class="clear"></div>
-				<div class="new">
-					<p><a href="#">Forgot Password ?</a></p>
-					<p class="sign">New here ?<a onclick="register(this)" href="#"> Sign Up</a></p>
-				</div>
-			</form>
+<h1>Welcome to you</h1>
+<div class="app-cam">
+	<div class="cam"><img src="images/cam.png" class="img-responsive" alt="" /></div>
+	<form>
+		<input type="text" id="usernameId" class="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入你的用户名';}" >
+		<input type="password" id="passwordId" name="password"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入你的密码';}">
+		<div class="submit"><input id="userlogin" type="button" value="Sign in" ></div>
+		<div class="clear"></div>
+		<div class="new">
+			<p><a href="#">Forgot Password ?</a></p>
+			<p class="sign">New here ?<a onclick="register(this)" href="#"> Sign Up</a></p>
 		</div>
+	</form>
+</div>
 
-	<!-- 新加的函数:登陆认证到主页 -->
+<!-- 新加的函数:登陆认证到主页 -->
 <script type="text/javascript">
 	$(function(){
 		$("#userlogin").click(doLogin);
@@ -35,48 +35,61 @@
 		console.log("该方法执行了");
 		var url="user/doFindUser";
 		var params={username:$("#usernameId").val()};
-		 $.post(url,params,function(result){
+		$.post(url,params,function(result){
 			setCookie("userId",result.data.id);//存userId存入Cookie中
 			setCookie("username",result.data.username);//存username存入Cookie中
-			  });
+		});
 
-		}
+	}
 	//1.整合
-  function doLogin(){
-		doZtFind();
-	  var params={
-		 username:$("#usernameId").val(),
-		 password:$("#passwordId").val(),
-	  }
-	  var url="user/doLogin";
-	  $.post(url,params,function(result){
-		  if(result.state==1){
+	function doLogin(){
+		var params={
+			username:$("#usernameId").val(),
+			password:$("#passwordId").val(),
+		}
+		var url="user/doLogin";
+		$.post(url,params,function(result){
+			if(result.state==1){
 				//跳转到indexUI对应的页面
+				doZtFind();
+				// ifAdmin(params);
 				location.href="doindex?t="+Math.random();
-			  }else{
-				$(".login-box-msg").html(result.message); 
+			}else{
+				$(".login-box-msg").html(result.message);
 				alert("用户名或密码错误,请重新输入")
-			  }
-			  return false;//防止刷新时重复提交
-		  });
-	  }
-	
-	
+			}
+			return false;//防止刷新时重复提交
+		});
+	}
+
+	function ifAdmin(params) {
+		$.ajax({
+			url:"user/ifAdmin",
+			type:"get",
+			data:{"param":params},
+			success:function(result){
+				if (result.state == 1) {
+					setCookie("status", result.data);//存username存入Cookie中
+				}
+			}
+		});
+	}
+
 	//2.整合
 	function setCookie(name,value)
 	{
-	var Days = 30;
-	var exp = new Date();
-	exp.setTime(exp.getTime() + Days*24*60*60*1000);
-	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+		var Days = 7;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
 	}
-	
-	
+
+
 </script>
 
 <script type="text/javascript">
 	function register(a){
-	window.location="doregister";
+		window.location="doregister";
 	}
 </script>
 </body>

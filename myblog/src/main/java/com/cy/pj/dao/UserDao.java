@@ -17,6 +17,8 @@ public interface UserDao {
 	//将注册信息插入数据库
 	int insertObjects(User entity);
 
+	int ifExistUserName(String userName);
+
 	//查询信息
 	@Select("select *from user where username=#{username}")
 	User findUserByUserName(String username);

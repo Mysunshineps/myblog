@@ -63,7 +63,7 @@
 
 
 						<ul class="dropdown-menu"
-							style="height: 88px; weight: 160px; background-image: url(images/pikaqiu.png); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; margin: 0px; padding: 0px">
+							style="height: auto; weight: 160px; background-image: url(images/pikaqiu.png); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; margin: 0px; padding: 0px">
 
 							<!-- Menu Footer-->
 							<li class="user-footer">
@@ -96,6 +96,12 @@
 								</div>
 							</li>
 
+							<li class="user-footer">
+								<div id = "admin" class="pull-left" style="weight: 33%; display: none">
+									<a href="doAdmin" class="btn btn-default btn-sign-out"
+									   style="font-color: black; background-color: red">后台</a>
+								</div>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -141,27 +147,29 @@
 		$(function(){
 			//在页面加载完成时自动执行的函数
 			var userZtId=getCookie("userId");//从Cookie中取userId,并赋值给userZtId
+			// var status=getCookie("status");
+			// ifAdmin(status);
 			setCookie("username",getCookie("username"));
-			//alert(username)
 			$.ajax({
 				url:"user/doFindUserId",
 				type:"post",
 				data:{"id":userZtId},
 				success:function(result){
-					//setCookie("userId",result.data.id);
 					$(".hidden-xs").text(result.username);
 					$("#username").text(result.username);
-					//document.getElementById("#myImgid").src=result.data.headUrl;
-					//if(result.state!=1){
-						//alert(result.message);
-					//}
 				}
 			});
 		});
 		
+		function ifAdmin(status) {
+			if (status==1){
+				$("#admin").show();
+			}
+		}
+		
 		function setCookie(name,value)
 		{
-		var Days = 30;
+		var Days = 7;
 		var exp = new Date();
 		exp.setTime(exp.getTime() + Days*24*60*60*1000);
 		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
@@ -223,7 +231,7 @@
 		
 		function setCookie(name,value)
 		{
-		var Days = 30;
+		var Days = 7;
 		var exp = new Date();
 		exp.setTime(exp.getTime() + Days*6*1000);
 		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
