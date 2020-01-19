@@ -49,7 +49,7 @@
 	<div class="fh5co-loader"></div>
 
 	<div id="page">
-		<div id="fh5co-aside" style="background-image: url(#)">
+		<div id="fh5co-aside" style="background-image:url(#)">
 			<div class="overlay">
 				<ul>
 					<li class="dropdown user user-menu"
@@ -57,7 +57,7 @@
 						<a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">
 							<img id="myImgid" style="height: 30px; weight: 30px" src="#"
-							class="user-image" alt="User Image"> <span
+							class="user-image"> <span
 							class="hidden-xs"></span>
 					</a>
 
@@ -147,8 +147,6 @@
 		$(function(){
 			//在页面加载完成时自动执行的函数
 			var userZtId=getCookie("userId");//从Cookie中取userId,并赋值给userZtId
-			// var status=getCookie("status");
-			// ifAdmin(status);
 			setCookie("username",getCookie("username"));
 			$.ajax({
 				url:"user/doFindUserId",
@@ -190,34 +188,40 @@
 		function doIndex(){
 			window.location.href="Index";
 			}
-		$(function(){
-			var url="user/doFindUserId";
-			var userId=getCookie("userId");
-			//alert(userId)
-			var params={"id":userId}
-			$.getJSON(url,params,function(result){
-				console.log(result);
-				var s = result.homeUrl;
-				$("#fh5co-aside").css("background-image","url(" + s + ")");
-				$("#myImgid").attr("src",result.headUrl);
-			})
-		})
+
 		$(function(){
 			var url="user/doFindAllContents";
 			var params={};
 			$.getJSON(url,params,function(result){
 				console.log(result);
 				var html="";
-					for(var i=0;i<result.length;i++)
-					{
+				for(var i=0;i<result.length;i++)
+				{
 					html=html+"<div class='fh5co-entry padding'>"+
-					"<img src="+"'"+result[i].titlePic+"'"+"></img>"
-					+"<div><span class='fh5co-post-date'>"+result[i].created+"</span><h2><a href='#' name="+"'"+result[i].cid+"'"+" onclick='getId(this)'>"+
-					result[i].title+"</a></h2><p>"+result[i].content+"</p></div></div>"
-					}
-					$("#xiaoxi").html(html);
+							"<img src="+"'"+result[i].titlePic+"'"+"></img>"
+							+"<div><span class='fh5co-post-date'>"+result[i].created+"</span><h2><a href='#' name="+"'"+result[i].cid+"'"+" onclick='getId(this)'>"+
+							result[i].title+"</a></h2><p>"+result[i].content+"</p></div></div>"
+				}
+				$("#xiaoxi").html(html);
+				findImgeUrl();
 			})
 		})
+
+		function findImgeUrl(){
+			var url="user/doFindUserId";
+			var userId=getCookie("userId");
+			//alert(userId)
+			var params={"id":userId}
+			$.getJSON(url,params,function(result){
+				var s = result.homeUrl;
+				$("#fh5co-aside").css("background-image","url(" + s + ")");
+				$("#myImgid").attr("src",result.headUrl);
+				if (null == result.homeUrl || result.homeUrl=="") {
+					alert("尊敬的新用户欢迎您，请点击左上角用户名设置：编辑头像及个人信息！")
+				}
+			})
+		}
+
 		function getId(a){
 			var cid = $(a).attr("name");
 			//var userId=1;
@@ -227,7 +231,6 @@
 			setCookie("userId",userId);//在本页面再次将userId存入Cookie
 			window.location="doLoadContentUI";
 		}
-		
 		
 		function setCookie(name,value)
 		{
@@ -246,7 +249,6 @@
 		return null;
 		} 
 	</script>
-
 
 </body>
 </html>

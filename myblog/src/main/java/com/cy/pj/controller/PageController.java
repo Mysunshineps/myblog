@@ -11,8 +11,8 @@ public class PageController {
 		return "login";
 	}
 	//跳转到注册页面
-	@RequestMapping("doregister")
-	public String doregister() {
+	@RequestMapping("doReg")
+	public String doReg() {
 		return "register";
 	}
 	

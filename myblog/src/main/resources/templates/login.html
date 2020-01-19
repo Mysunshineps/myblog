@@ -41,7 +41,7 @@
 		});
 
 	}
-	//1.整合
+
 	function doLogin(){
 		var params={
 			username:$("#usernameId").val(),
@@ -75,7 +75,6 @@
 		});
 	}
 
-	//2.整合
 	function setCookie(name,value)
 	{
 		var Days = 7;
@@ -89,7 +88,7 @@
 
 <script type="text/javascript">
 	function register(a){
-		window.location="doregister";
+		window.location.href="doReg?t="+Math.random();
 	}
 </script>
 </body>
