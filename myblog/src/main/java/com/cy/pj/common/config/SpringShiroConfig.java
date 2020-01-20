@@ -54,7 +54,7 @@ public class SpringShiroConfig {
 	    fm.put("/js/**", "anon");
 	    fm.put("/logo/**", "anon");
 	    fm.put("/sass/**", "anon");
-	    //fm.put("/doregister", "anon");
+	    fm.put("/doReg", "anon");
 	    fm.put("/doSingle", "anon");
 	    fm.put("/Index", "anon");
 	    fm.put("/user/doLogin", "anon");

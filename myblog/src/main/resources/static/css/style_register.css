@@ -141,7 +141,7 @@ html,body{
     color: #464e60;
     font-size:16px;
     font-weight: 400;
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
     padding: 0 18px;
 }
 .signin-form .form-col{
