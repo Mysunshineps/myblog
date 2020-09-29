@@ -1,0 +1,67 @@
+{
+  "analysis": {
+    "analyzer": {
+      "ikSearchAnalyzer": {
+        "type": "custom",
+        "tokenizer": "ik_max_word",
+        "char_filter": [
+          "tsconvert"
+        ]
+      },
+      "ikSmartSearchAnalyzer": {
+        "type": "custom",
+        "tokenizer": "ik_smart",
+        "char_filter": [
+          "tsconvert"
+        ]
+      },
+      "pinyinSimpleAnalyzer": {
+        "tokenizer": "my_pinyin"
+      },
+      "pinyinComplexAnalyzer": {
+        "tokenizer": "ik_smart",
+        "filter": [
+          "lowercase",
+          "pinyin_simple_filter",
+          "edge_ngram_filter"
+        ]
+      },
+      "lowercaseAnalyzer": {
+        "type": "custom",
+        "tokenizer": "keyword",
+        "filter": "lowercase"
+      }
+    },
+    "tokenizer" : {
+      "my_pinyin" : {
+        "type" : "pinyin",
+        "keep_separate_first_letter" : false,
+        "keep_full_pinyin" : true,
+        "keep_original" : true,
+        "limit_first_letter_length" : 16,
+        "lowercase" : true,
+        "remove_duplicated_term" : true
+      }
+    },
+    "filter": {
+      "edge_ngram_filter": {
+        "type": "edge_ngram",
+        "min_gram": 1,
+        "max_gram": 50
+      },
+      "pinyin_simple_filter": {
+        "type": "pinyin",
+        "first_letter": "prefix",
+        "padding_char": " ",
+        "limit_first_letter_length": 50,
+        "lowercase": true
+      }
+    },
+    "char_filter": {
+      "tsconvert": {
+        "type": "stconvert",
+        "convert_type": "t2s"
+      }
+    }
+  }
+}

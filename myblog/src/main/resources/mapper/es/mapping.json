@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "keyword": {
+      "type": "text",
+      "analyzer": "ikSearchAnalyzer",
+      "search_analyzer": "ikSmartSearchAnalyzer",
+      "fields": {
+        "pinyin": {
+          "type": "text",
+          "analyzer": "pinyinComplexAnalyzer",
+          "search_analyzer": "pinyinComplexAnalyzer",
+          "store": false,
+          "term_vector": "with_offsets"
+        }
+      }
+    },
+    "ownerNature": {
+      "type": "keyword"
+    },
+    "model": {
+      "type": "keyword",
+      "index": false
+    },
+    "weight": {
+      "type": "integer"
+    },
+    "createTime": {
+      "type": "date",
+      "format": "yyyy-MM-dd HH:mm:ss"
+    }
+  }
+}

@@ -1,14 +1,14 @@
 package com.cy.pj.serviceimpl;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import com.alibaba.fastjson.JSON;
+import com.cy.pj.es.model.SearchVo;
+import com.cy.pj.es.service.EsSearchServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import com.cy.pj.dao.ContentsDao;
@@ -19,12 +19,27 @@ import com.cy.pj.service.ContentsService;
 public class ContentsServiceImpl implements ContentsService{
 	@Autowired
 	private ContentsDao contentsDao;
-	
+
 	@Autowired
 	private RedisTemplate redisTemplate;
+
+	@Autowired
+	private EsSearchServiceImpl esSearchService;
+
 	@Override
 	public Contents findContentById(Integer cid) {
-		Contents contents=contentsDao.findContentById(cid);
+		Contents contents = new Contents();
+		try {
+			SearchVo searchVo = esSearchService.selectContentById(cid + "");
+			if (null != searchVo && StringUtils.isNotBlank(searchVo.getContents())){
+				contents = JSON.parseObject(searchVo.getContents(), Contents.class);
+			}else {
+				contents=contentsDao.findContentById(cid);
+				esSearchService.saveOrUpdate(new SearchVo(contents.getCid(), JSON.toJSONString(contents)));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return contents;
 	}
 	@Override
@@ -39,5 +54,5 @@ public class ContentsServiceImpl implements ContentsService{
 	public Contents findNextContent(Integer cid) {
 		return contentsDao.findNextContent(cid);
 	}
-	
+
 }
