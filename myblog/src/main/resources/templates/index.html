@@ -174,10 +174,11 @@
 	}
 	function getCookie(name){
 		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-		if(arr=document.cookie.match(reg))
+		if(arr=document.cookie.match(reg)){
 			return unescape(arr[2]);
-		else
+		}else{
 			return null;
+		}
 	}
 </script>
 
@@ -210,7 +211,6 @@
 	function findImgeUrl(){
 		var url="user/doFindUserId";
 		var userId=getCookie("userId");
-		//alert(userId)
 		var params={"id":userId}
 		$.getJSON(url,params,function(result){
 			var s = result.homeUrl;
@@ -226,7 +226,6 @@
 		var cid = $(a).attr("name");
 		//var userId=1;
 		var userId=getCookie("userId");
-		//alert(userId);
 		setCookie("cid",cid);
 		setCookie("userId",userId);//在本页面再次将userId存入Cookie
 		window.location="doLoadContentUI";
@@ -243,10 +242,11 @@
 	function getCookie(name)
 	{
 		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-		if(arr=document.cookie.match(reg))
+		if(arr=document.cookie.match(reg)){
 			return unescape(arr[2]);
-		else
+		}else{
 			return null;
+		}
 	}
 </script>
 

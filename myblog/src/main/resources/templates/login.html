@@ -31,16 +31,6 @@
 	$(function(){
 		$("#userlogin").click(doLogin);
 	})
-	function doZtFind(){
-		console.log("该方法执行了");
-		var url="user/doFindUser";
-		var params={username:$("#usernameId").val()};
-		$.post(url,params,function(result){
-			setCookie("userId",result.data.id);//存userId存入Cookie中
-			setCookie("username",result.data.username);//存username存入Cookie中
-		});
-
-	}
 
 	function doLogin(){
 		var params={
@@ -49,16 +39,30 @@
 		}
 		var url="user/doLogin";
 		$.post(url,params,function(result){
+			doZtFind();
 			if(result.state==1){
 				//跳转到indexUI对应的页面
-				doZtFind();
 				// ifAdmin(params);
 				location.href="doindex?t="+Math.random();
 			}else{
 				$(".login-box-msg").html(result.message);
-				alert("用户名或密码错误,请重新输入")
+				layer.msg('用户名或密码错误,请重新输入', {icon: 2});
+				// alert("用户名或密码错误,请重新输入")
 			}
 			return false;//防止刷新时重复提交
+		});
+	}
+
+	function doZtFind(){
+		var url="user/doFindUser";
+		var params={username:$("#usernameId").val()};
+		$.post(url,params,function(result){
+			if(result.state==1) {
+				setCookie("userId", result.data.id);//存userId存入Cookie中
+				setCookie("username", result.data.username);//存username存入Cookie中
+			}else {
+				alert("用户名或密码错误,请重新输入")
+			}
 		});
 	}
 

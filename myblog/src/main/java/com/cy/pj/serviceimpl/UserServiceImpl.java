@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.cy.pj.redis.RedisKey;
+import com.cy.pj.redis.StringRedisService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,12 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDao userDao;
+
 	@Autowired
 	private ContentsDao contentsDao;
+
+	@Autowired
+	private StringRedisService stringRedisService;
 
 	@Override
 	public int doinsertObjects(User entity) {
@@ -142,8 +148,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<Contents> doFindAllCollect(Integer userId) {
-		List<Integer> contentIds = contentsDao.findContentsByuserId(userId);
-		return contentsDao.findCollects(contentIds);
+		String redisKey = RedisKey.collects.COLLECTS + userId;
+		List<Contents> list = stringRedisService.getCollectList(redisKey);
+		if (null != list && !list.isEmpty()){
+			return list;
+		}else {
+			List<Integer> contentIds = contentsDao.findContentsByuserId(userId);
+			list = contentsDao.findCollects(contentIds);
+			stringRedisService.set(redisKey,list,10*1000L);
+		}
+		return list;
 	}
 
 	@Override
