@@ -1,0 +1,526 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>I believe I can fly</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes">
+	<meta name="description"
+		  content="Free HTML5 Website Template by freehtml5.co" />
+	<meta name="keywords"
+		  content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" content="freehtml5.co" />
+
+
+
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:site_name" content="" />
+	<meta property="og:description" content="" />
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link
+			href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800"
+			rel="stylesheet">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body class="single">
+
+<div class="fh5co-loader"></div>
+
+<div id="page">
+	<div id="fh5co-aside" style="background-image: url()"
+		 data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<nav role="navigation">
+			<ul>
+				<li><a onclick="doIndex()" href="#"><i class="icon-home"></i></a></li>
+			</ul>
+		</nav>
+		<div class="page-title">
+			<img id="titlePic" src="" alt="Free HTML5 by FreeHTMl5.co">
+			<span id="createdtime"></span>
+			<h2 id="title"></h2>
+		</div>
+	</div>
+	<div id="fh5co-main-content">
+		<div class="fh5co-post">
+			<div class="fh5co-entry padding">
+				<div>
+					<p id="content"></p>
+
+					<style>
+						#juzhong {
+							margin: 0 auto;
+							width: 320px;
+							height: 100px;
+							border: 1px solid #F00
+						}
+					</style>
+					<!-- 打赏按钮 -->
+
+					<div class="pull-left" style="weight: 25%;">
+						<button id="dashang" type="button"
+								class="btn btn-default btn-update"
+								style="font-color: black; background-color: red">打赏</button>
+					</div>
+
+					<!-- 地图按纽 -->
+					<div class="pull-left" style="weight: 25%;">
+						<button id="ditu" type="button"
+								class="btn btn-default btn-update"
+								style="font-color: black; background-color: red">位置</button>
+					</div>
+
+					<!-- 收藏按纽 -->
+					<div class="pull-right" style="weight: 25%;">
+						<button id="pinglun" type="button"
+								class="btn btn-default btn-update"
+								style="font-color: black; background-color: red">评论</button>
+					</div>
+
+					<!-- 评论按纽 -->
+					<div class="pull-right" style="weight: 25%;">
+						<button id="shoucang" type="button"
+								class="btn btn-default btn-update"
+								style="font-color: black; background-color: red">收藏</button>
+					</div>
+
+				</div>
+				<span style="color: red">评论区：</span>
+				<p id="commented"></p>
+
+			</div>
+			<!-- 点击评论按钮显示信息 -->
+			<div id="respond" class="comment-respond" style="display: none">
+				<h3 id="reply-title" class="comment-reply-title">留下你的足迹</h3>
+				<form action="single.html" method="post" id="commentform"
+					  class="comment-form" novalidate>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-control-wrapper">
+								<div class="floating-label">姓名</div>
+								<input id="authorId" type="text" class="form-control empty">
+								<span class="material-input"></span>
+							</div>
+
+							<div class="form-control-wrapper">
+								<div class="floating-label">邮箱</div>
+								<input id="mailId" type="email" class="form-control empty">
+								<span class="material-input"></span>
+							</div>
+
+							<div class="form-control-wrapper">
+								<div class="floating-label">分享链接</div>
+								<input id="urlId" type="url" class="form-control empty">
+								<span class="material-input"></span>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-control-wrapper">
+								<div class="floating-label">评论留言</div>
+								<textarea name="comment" id=contentId
+										  class="form-control empty" cols="30" rows="10"></textarea>
+								<span class="material-input"></span>
+							</div>
+						</div>
+					</div>
+					<p class="form-submit">
+						<button id="submit" type="button" class="btn btn-danger">提交评论</button>
+					</p>
+				</form>
+			</div>
+
+
+		</div>
+	</div>
+
+
+</div>
+
+
+<div class="fh5co-navigation">
+	<div class="fh5co-cover prev fh5co-cover-sm" id="pre"
+		 style="background-image: url()">
+		<div class="overlay"></div>
+
+		<a class="copy" href="#" name="" id="copy1">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Previous Post</span>
+						<h2></h2>
+					</div>
+				</div>
+			</div>
+		</a>
+
+	</div>
+	<div class="fh5co-cover next fh5co-cover-sm" id="next"
+		 style="background-image: url()">
+		<div class="overlay"></div>
+		<a class="copy" href="#" name="" id="copy2">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next Post</span>
+						<h2></h2>
+					</div>
+				</div>
+			</div>
+		</a>
+
+	</div>
+</div>
+
+<footer>
+	<div></div>
+</footer>
+
+<div class="gototop js-top">
+	<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+</div>
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Waypoints -->
+<script src="js/jquery.waypoints.min.js"></script>
+<!-- Stellar Parallax -->
+<script src="js/jquery.stellar.min.js"></script>
+<!-- Main -->
+<script src="js/main.js"></script>
+
+
+
+<!-- 点击打赏，将打赏框显示出来，再点击打赏，将打赏框隐藏 -->
+<script type="text/javascript">
+	$("#dashang").click(function() {
+		var width = $(".tctip").css("width");
+		if (width == "240px" || width == "240PX") {
+			$(".tctip").css("width", "0px");
+		} else {
+			$(".tctip").css("width", "240px");
+		}
+	});
+</script>
+
+
+<!-- 地图设置 -->
+<script type="text/javascript">
+	$("#ditu").click(function() {
+		window.location = "doDiTu";
+	});
+</script>
+
+
+<!-- 将隐藏的评论div显示出来 -->
+<script type="text/javascript">
+	$("#pinglun").click(function() {
+		//1.加一个初始化评论信息方法
+		doInitPinLunData();
+		var isshow = $("#respond").css("display");
+		if (isshow == "none") {
+			$("#respond").show();
+			$("#pinglun").text("关闭评论");
+		} else {
+			$("#respond").hide();
+			$("#pinglun").text("评论");
+		}
+	});
+
+	//2.执行方法自动填充数据
+	function doInitPinLunData() {
+		var userId = getCookie("userId");
+		$.ajax({
+			url : "user/doFindUserId",
+			type : "post",
+			data : {
+				"id" : userId
+			},
+			success : function(result) {
+				//初始化评论信息
+				$("#authorId").val(result.username);
+				$("#mailId").val(result.email);
+				//$("#urlId").val(window.location.href);
+			}
+		});
+	}
+
+	function setCookie(name,value)
+	{
+		var Days = 7;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/";
+	}
+
+	function getCookie(name) {
+		var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+		if (arr = document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}
+</script>
+
+
+<!-- 将评论提交给数据库 -->
+<script type="text/javascript">
+	$(function() {
+		$("#submit").click(submitComment)
+	})
+	function submitComment() {
+		var userId = getCookie("userId");//在本页面中取Cookie中userId的值
+		var cid = getCookie("cid");
+		var params = {
+			userId : userId,
+			author : $("#authorId").val(),
+			mail : $("#mailId").val(),
+			content : $("#contentId").val(),
+			cid : cid,
+			url : $("#urlId").val(),
+		}
+		var purl = "comment/doInsertComment";
+		$.post(purl, params, function(result) {
+			if (result.state == 1) {
+				alert(result.message)
+				//alert("当前IP："+window.location.href);
+				//跳转到index对应的页面
+				location.href = "Index";
+				//window.location='doindex';
+			} else {
+				$(".login-box-msg").html(result.message);
+			}
+			return false;//防止刷新时重复提交
+		});
+	}
+
+	function getCookie(name) {
+		var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+		if (arr = document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}
+</script>
+
+
+
+<!-- 收藏功能：绑定用户id和文章id，插入用户文章关系表 -->
+<script type="text/javascript">
+	$(function() {
+		//页面加载完成以后加载角色信息并初始化页面
+		$("#pre").css("background-image", "url(" + "images/psq9.png" + ")");
+
+		$("#shoucang").click(submitshoucang);
+	})
+
+
+
+	function submitshoucang() {
+		var userId = getCookie("userId");
+		var cid = getCookie("cid");
+		//alert(cid);
+		var params = {
+			userId : userId,
+			contentsId : cid,
+		}
+		var url = "user/doCollect";
+		$.post(url, params, function(result) {
+			if (result.message == "收藏成功") {
+				$("#shoucang").text("取消收藏");
+			} else {
+				$("#shoucang").text("收藏");
+			}
+			//alert("result:"+result);
+			alert(result.message);
+		})
+
+	}
+
+	function getCookie(name) {
+		var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+		if (arr = document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}
+</script>
+
+
+
+
+
+<script src="http://static.tctip.com/tctip-1.0.0.min.js"></script>
+<script>
+	new tctip({
+		top : '20%',
+		button : {
+			name : "dashang",
+			type : 'dashang',
+		},
+		list : [ {
+			type : 'alipay',
+			qrImg : 'images/zhifubao.png'
+		}, {
+			type : 'wechat',
+			qrImg : 'images/weixin.png'
+		} ]
+	}).init()
+</script>
+
+
+<script type="text/javascript">
+	$(function() {
+		var cid = getCookie("cid");
+		doGetContent(cid);
+		doPreContent(cid);
+		doNextContents(cid);
+		//初始化收藏按纽
+		doInitFormData(cid);//反复跳转
+		//评论历史
+		doCommented(cid);
+		//分页
+		$("#copy1").click(function() {
+			var cid = $("#copy1").attr("name");
+			doGetContent(cid);
+			doPreContent(cid);
+			doNextContents(cid);
+			//初始化收藏按纽
+			doInitFormData(cid);//反复跳转
+			//评论历史
+			doCommented(cid);
+
+		})
+		$("#copy2").click(function() {
+			var cid = $("#copy2").attr("name");
+			doGetContent(cid);
+			doPreContent(cid);
+			doNextContents(cid);
+			//初始化收藏按纽
+			doInitFormData(cid);//反复跳转
+			//评论历史
+			doCommented(cid);
+		})
+
+	})
+	function doIndex() {
+		window.location.href = "Index";
+	}
+	function doGetContent(cid) {
+		var url = "doContentUI";
+		var params = {
+			"cid" : cid
+		};
+
+		$.getJSON(url, params, function(result) {
+			console.log(result);
+			var s = result.titlePic;
+			$("#fh5co-aside").css("background-image", "url(" + s + ")");
+			$("#title").text(result.title);
+			$("#createdtime").text(result.created);
+			$("#titlePic").attr("src", result.titlePic);
+			$("#content").text(result.content);
+			setCookie("cid", result.cid);
+		})
+	}
+
+	function doPreContent(cid) {
+		var url = "doPreContents";
+		var params = {};
+		params['cid'] = cid;
+		$.getJSON(url, params, function(result) {
+			console.log(result);
+			var s = result.titlePic;
+			$("#copy1").attr("name", result.cid);
+			$("#pre").css("background-image", "url(" + s + ")");
+			$("#pre h2").text(result.title);
+		})
+	}
+	function doNextContents(cid) {
+		var url = "doNextContents";
+		var params = {};
+		params['cid'] = cid;
+		$.getJSON(url, params, function(result) {
+			//alert(cid);
+			console.log(result);
+			var s = result.titlePic;
+			$("#copy2").attr("name", result.cid);
+			$("#next").css("background-image", "url(" + s + ")");
+			$("#next h2").text(result.title);
+		})
+	}
+
+	function doCommented(cid){
+		var url = "/comment/doCommentedById"
+		var params ={};
+		params['cid'] = cid;
+		$.getJSON(url, params, function(result){
+			//查询的评论历史数据
+			var data = result.data;
+			var html = '<ul>';
+			for (var i=0;i<data.length;i++){
+				html += '<li>'+data[i]+'</li>';
+			}
+			html += '</ul>';
+			$("#commented").html(html);
+		})
+	}
+
+	function doInitFormData(cid) {
+		var url = "user/docheck";
+		var userId = getCookie("userId");
+		var params = {
+			"userId" : userId,
+			"contentsId" : cid,
+		};
+		$.getJSON(url, params, function(result){
+			if (result == null) {
+				alert("未查询到该用户信息");
+			}
+			//初始化用户信息
+			$("#shoucang").text(result.message);
+		});
+	}
+
+	function getCookie(name) {
+		var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+		if (arr = document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}
+
+</script>
+
+
+</body>
+</html>
+

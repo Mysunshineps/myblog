@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>I believe I can fly</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes">
+	<meta name="description"
+		  content="Free HTML5 Website Template by freehtml5.co" />
+	<meta name="keywords"
+		  content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" content="freehtml5.co" />
+
+
+
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:site_name" content="" />
+	<meta property="og:description" content="" />
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+
+<div class="fh5co-loader"></div>
+
+<div id="page">
+	<div id="fh5co-aside" style="background-image:url(#)">
+		<div class="overlay">
+			<ul>
+				<li class="dropdown user user-menu"
+					style="margin-top: 27px; margin-left: 50px;">
+					<a href="#" class="dropdown-toggle"
+					   data-toggle="dropdown">
+						<img id="myImgid" style="height: 30px; weight: 30px" src="#"
+							 class="user-image"> <span
+							class="hidden-xs"></span>
+					</a>
+
+
+					<ul class="dropdown-menu"
+						style="height: auto; weight: 160px; background-image: url(images/pikaqiu.png); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; margin: 0px; padding: 0px">
+
+						<!-- Menu Footer-->
+						<li class="user-footer">
+							<div class="pull-left" style="weight: 33%;">
+								<a href="doAction" class="btn btn-default btn-update"
+								   style="font-color: black; background-color: red">收藏</a>
+							</div>
+						</li>
+
+						<li class="user-footer">
+							<div class="pull-left" style="weight: 33%;">
+								<a href="/doPingLun" class="btn btn-default btn-update"
+								   style="font-color: black; background-color: red">评论</a>
+							</div>
+						</li>
+
+
+
+						<li class="user-footer">
+							<div class="pull-left" style="weight: 33%;">
+								<a href="doProFile" class="btn btn-default btn-update"
+								   style="font-color: black; background-color: red">设置</a>
+							</div>
+						</li>
+
+						<li class="user-footer">
+							<div class="pull-right" style="weight: 33%;">
+								<a href="doSignOut" class="btn btn-default btn-sign-out"
+								   style="font-color: black; background-color: red">退出</a>
+							</div>
+						</li>
+
+						<li class="user-footer">
+							<div id = "admin" class="pull-left" style="weight: 33%; display: none">
+								<a href="doAdmin" class="btn btn-default btn-sign-out"
+								   style="font-color: black; background-color: red">后台</a>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+		</div>
+
+		<nav role="navigation">
+			<ul>
+				<li><a onclick="doIndex()" href="#"><i class="icon-home"></i></a></li>
+			</ul>
+		</nav>
+
+		<div class="featured">
+			<span>欢迎登录</span>
+			<h2 id="username"></h2>
+		</div>
+
+	</div>
+	<div id="fh5co-main-content">
+		<div class="fh5co-post" id="xiaoxi"></div>
+	</div>
+</div>
+
+<div class="gototop js-top">
+	<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+</div>
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Waypoints -->
+<script src="js/jquery.waypoints.min.js"></script>
+<!-- Stellar Parallax -->
+<script src="js/jquery.stellar.min.js"></script>
+<!-- Main -->
+<script src="js/main.js"></script>
+
+<!-- 3.整合 -->
+<script type="text/javascript">
+	$(function(){
+		//在页面加载完成时自动执行的函数
+		var userZtId=getCookie("userId");//从Cookie中取userId,并赋值给userZtId
+		setCookie("username",getCookie("username"));
+		$.ajax({
+			url:"user/doFindUserId",
+			type:"post",
+			data:{"id":userZtId},
+			success:function(result){
+				$(".hidden-xs").text(result.username);
+				$("#username").text(result.username);
+			}
+		});
+	});
+
+	function ifAdmin(status) {
+		if (status==1){
+			$("#admin").show();
+		}
+	}
+
+	function setCookie(name,value)
+	{
+		var Days = 7;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/";
+	}
+	function getCookie(name){
+		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+		if(arr=document.cookie.match(reg)){
+			return unescape(arr[2]);
+		}else{
+			return null;
+		}
+	}
+</script>
+
+
+
+
+<script type="text/javascript">
+	function doIndex(){
+		window.location.href="Index";
+	}
+
+	$(function(){
+		var url="user/doFindAllContents";
+		var params={};
+		$.getJSON(url,params,function(result){
+			console.log(result);
+			var html="";
+			for(var i=0;i<result.length;i++)
+			{
+				html=html+"<div class='fh5co-entry padding'>"+
+						"<img src="+"'"+result[i].titlePic+"'"+"></img>"
+						+"<div><span class='fh5co-post-date'>"+result[i].created+"</span><h2><a href='#' name="+"'"+result[i].cid+"'"+" onclick='getId(this)'>"+
+						result[i].title+"</a></h2><p>"+result[i].content+"</p></div></div>"
+			}
+			$("#xiaoxi").html(html);
+			findImgeUrl();
+		})
+	})
+
+	function findImgeUrl(){
+		var url="user/doFindUserId";
+		var userId=getCookie("userId");
+		var params={"id":userId}
+		$.getJSON(url,params,function(result){
+			var s = result.homeUrl;
+			$("#fh5co-aside").css("background-image","url(" + s + ")");
+			$("#myImgid").attr("src",result.headUrl);
+			if (null == result.homeUrl || result.homeUrl=="") {
+				alert("尊敬的新用户欢迎您，请点击左上角用户名设置：编辑头像及个人信息！")
+			}
+		})
+	}
+
+	function getId(a){
+		var cid = $(a).attr("name");
+		//var userId=1;
+		var userId=getCookie("userId");
+		setCookie("cid",cid);
+		window.location="doLoadContentUI";
+	}
+
+	function setCookie(name,value)
+	{
+		var Days = 7;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*6*1000);
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/";
+	}
+
+	function getCookie(name)
+	{
+		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+		if(arr=document.cookie.match(reg)){
+			return unescape(arr[2]);
+		}else{
+			return null;
+		}
+	}
+</script>
+
+</body>
+</html>
+

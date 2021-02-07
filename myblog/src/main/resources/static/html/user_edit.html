@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/bootstrap.min.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/font-awesome.min.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/ionicons.min.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/AdminLTE.min.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/skin-blue.min.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/metroStyle.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/layer.css">
+	<link rel="stylesheet"
+		  href="bower_components/bootstrap-slider/jquery.treegrid.css">
+	<title>Your Info</title>
+</head>
+<body style="background-image: url(images/timg.jpg)">
+<!-- Horizontal Form -->
+<div style="width: 60%; margin-left: 20%;">
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">用户信息查看及其修改</h3>
+		</div>
+		<!-- /.box-header -->
+		<!-- form start -->
+		<form name="form123" id="form123" class="form-horizontal"
+			  method="post" enctype="multipart/form-data">
+			<div class="box-body">
+				<div class="form-group">
+					<label for="usernameId" class="col-sm-2 control-label">用户名</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="usernameId">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="genderId" class="col-sm-2 control-label">性别</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="genderId">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="headId" class="col-sm-2 control-label">头像</label>
+					<div class="col-sm-10">
+
+						<!--  //头像上传功能 -->
+						<div class="pic-box">
+							<input class="fileInput" id="headId" type="file"
+								   onchange="upload()">
+						</div>
+
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="homeId" class="col-sm-2 control-label">主页图片</label>
+					<div class="col-sm-10">
+						<div class="pic-box">
+							<input class="fileInput" id="homeId" type="file"
+								   onchange="upload()">
+						</div>
+
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="emailId" class="col-sm-2 control-label">邮箱</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="emailId">
+					</div>
+				</div>
+				<!-- 修改密码 -->
+				<div class="form-group">
+					<label for="passwordId" class="col-sm-2 control-label">原密码</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="passwordId">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rePasswordId" class="col-sm-2 control-label">新密码</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="rePasswordId">
+					</div>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
+					<button type="button" class="btn btn-info pull-right btn-save">Save</button>
+				</div>
+				<!-- /.box-footer -->
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js"></script>
+<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+
+
+<script type="text/javascript">
+	//json 格式的javascript对象
+	$(document).ready(function() {
+		//页面加载完成以后加载角色信息并初始化页面
+		doInitFormData();
+		//事件注册
+		$(".box-footer").on("click", ".btn-cancel", doCancel)//为取消按钮注册点击事件
+				.on("click", ".btn-save", doSaveOrUpdate);//为保存按钮注册点击事件
+	});
+
+
+	function doCancel() {
+		window.location.href = "Index";
+	}
+
+	function doSaveOrUpdate() {
+		var headUrl = "";
+		var homeUrl = "";
+		//实现头像上传
+		var pic = $("#headId").get(0).files[0];
+		var fd = new FormData();
+		fd.append("uploadFile" , pic);
+		$.ajax({
+			url: "file/upload/headImage",
+			type: "POST",
+			data: fd,
+			processData: false,
+			contentType: false,
+			async:false,//同步
+			success: function(result){
+				if(result != "200"){
+					headUrl = result;
+				}
+			}
+		});
+
+		//实现主页图片上传
+		var pic1 = $("#homeId").get(0).files[0];
+		var fd1 = new FormData();
+		fd1.append("uploadFile" , pic1);
+		$.ajax({
+			url: "file/upload/homeImage",
+			type: "POST",
+			data: fd1,
+			async:false,//同步
+			processData: false,
+			contentType: false,
+			success: function(result1){
+				if(result1 != "200"){
+					homeUrl = result1;
+				}
+			}
+		});
+
+		var params = {
+			username : $("#usernameId").val(),
+			gender : $("#genderId").val(),
+			headUrl : headUrl,
+			homeUrl : homeUrl,
+			email : $("#emailId").val(),
+			id : getCookie("userId"),
+			password : $("#passwordId").val(),
+			repassword : $("#rePasswordId").val()
+		}
+		//2.发起异步请求
+		var updateUrl = "user/doUpdateObject";
+		$.post(updateUrl, params, function(result) {
+			if (result.state == 1) {
+				doCancel();
+			}else {
+				alert("用户名和原密码任意一项都不能为空!");
+			}
+		})
+
+	}
+
+	function doInitFormData() {
+		var userId = getCookie("userId");
+		$.ajax({
+			url : "user/doFindUserId",
+			type : "post",
+			data : {
+				"id" : userId
+			},
+			success : function(result) {
+				if (result == null) {
+					alert("未查询到该用户信息");
+				}
+				//初始化用户信息
+				$("#idId").val(result.id);
+				if (result.username !=null){
+					$("#usernameId").val(result.username);
+				}
+				if (result.gender !=null){
+					$("#genderId").val(result.gender);
+				}
+				if (result.headUrl !=null){
+					$("#headId").val(result.headUrl);
+				}
+				if (result.homeUrl !=null){
+					$("#homeId").val(result.homeUrl);
+				}
+				if (result.email !=null){
+					$("#emailId").val(result.email);
+
+				}
+			}
+		});
+	}
+	function getCookie(name) {
+		var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+		if (arr = document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}
+</script>
+</body>
+</html>
