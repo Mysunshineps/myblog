@@ -65,6 +65,7 @@ public class SpringShiroConfig {
 	    fm.put("/user/doFindUserId", "anon");
 	    fm.put("/comment/doInsertComment", "anon");
 	    fm.put("/user/doLoadIndexUI", "anon");
+		fm.put("/templates/*","anon");
 	    
 	    //设置必须认证才可以访问的资源
 	    fm.put("/**", "user");

@@ -258,7 +258,6 @@
 	//2.执行方法自动填充数据
 	function doInitPinLunData() {
 		var userId = getCookie("userId");
-		setCookie("userId", userId);
 		$.ajax({
 			url : "user/doFindUserId",
 			type : "post",

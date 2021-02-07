@@ -124,7 +124,6 @@
 	$(function(){
 		//在页面加载完成时自动执行的函数
 		var userZtId=getCookie("userId");//从Cookie中取userId,并赋值给userZtId
-		setCookie("username",getCookie("username"));
 		//alert(username)
 		$.ajax({
 			url:"user/doFindUserId",
@@ -142,7 +141,7 @@
 		var Days = 7;
 		var exp = new Date();
 		exp.setTime(exp.getTime() + Days*24*60*60*1000);
-		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/";
 	}
 	function getCookie(name){
 		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
@@ -198,7 +197,6 @@
 		var userId=getCookie("userId");
 		//alert(userId);
 		setCookie("cid",cid);
-		setCookie("userId",userId);//在本页面再次将userId存入Cookie
 		window.location="doLoadContentUI";
 	}
 
@@ -222,7 +220,7 @@
 		var Days = 30;
 		var exp = new Date();
 		exp.setTime(exp.getTime() + Days*6*1000);
-		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/";
 	}
 
 	function getCookie(name)

@@ -44,8 +44,7 @@ public class UserController {
 		token.setUsername(username);
 		token.setPassword(password.toCharArray());
 		subject.login(token);//提交给SecurityManager
-		//log.info("subject-----------"+subject);
-		return new JsonResult("登陆成功!");
+		return new JsonResult(userService.doFindUser(username));
 	}
 
 	//初始化检查是否收藏，并显示到浏览器上
@@ -86,7 +85,7 @@ public class UserController {
 	@RequestMapping("doFindUser")
 	@ResponseBody
 	public JsonResult doFindUser(String username) {
-		String  newStingString= new JSONTokener(username).nextValue().toString();
+		String newStingString= new JSONTokener(username).nextValue().toString();
 		System.out.println(newStingString);
 		return new JsonResult(userService.doFindUser(username));
 	}
