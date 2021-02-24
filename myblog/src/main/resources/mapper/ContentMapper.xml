@@ -14,7 +14,7 @@
 		select * from contents where cid=(select min(cid) from contents where cid>#{cid})
 	</select>
 
-	<select id="findContentsByuserId" parameterType="integer" resultType="list">
+	<select id="findContentsByuserId" parameterType="integer" resultType="integer">
 		select contents_id from usercontents where user_id=#{userId}
 	</select>
 
