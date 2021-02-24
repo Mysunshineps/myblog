@@ -149,7 +149,7 @@
 		var userZtId=getCookie("userId");//从Cookie中取userId,并赋值给userZtId
 		setCookie("username",getCookie("username"));
 		$.ajax({
-			url:"user/doFindUserId",
+			url:"admin/user/doFindUserId",
 			type:"post",
 			data:{"id":userZtId},
 			success:function(result){
@@ -191,7 +191,7 @@
 	}
 
 	$(function(){
-		var url="user/doFindAllContents";
+		var url="admin/user/doFindAllContents";
 		var params={};
 		$.getJSON(url,params,function(result){
 			console.log(result);
@@ -209,7 +209,7 @@
 	})
 
 	function findImgeUrl(){
-		var url="user/doFindUserId";
+		var url="admin/user/doFindUserId";
 		var userId=getCookie("userId");
 		var params={"id":userId}
 		$.getJSON(url,params,function(result){
@@ -227,7 +227,7 @@
 		//var userId=1;
 		var userId=getCookie("userId");
 		setCookie("cid",cid);
-		window.location="doLoadContentUI";
+		window.location="doSingle";
 	}
 
 	function setCookie(name,value)

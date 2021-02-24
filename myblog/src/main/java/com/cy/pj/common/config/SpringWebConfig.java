@@ -1,12 +1,11 @@
 package com.cy.pj.common.config;
+import com.cy.pj.common.interceptor.CustomerInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.cy.pj.common.web.TimeInterceptor;
 
 @Configuration
 public class SpringWebConfig 
@@ -17,9 +16,9 @@ public class SpringWebConfig
 	@Override
 	public void addInterceptors(
 	   InterceptorRegistry registry) {
-	   System.out.println("==addInterceptors==");
-	   registry.addInterceptor(new TimeInterceptor())
-	   .addPathPatterns("/user/doLogin");
+	   System.out.println("==add CustomerInterceptor==");
+	   registry.addInterceptor(new CustomerInterceptor())
+	   .addPathPatterns("/admin/**");
 	}
 
 	 @SuppressWarnings({ "rawtypes", "unchecked" })

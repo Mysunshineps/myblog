@@ -259,7 +259,7 @@
 	function doInitPinLunData() {
 		var userId = getCookie("userId");
 		$.ajax({
-			url : "user/doFindUserId",
+			url : "admin/user/doFindUserId",
 			type : "post",
 			data : {
 				"id" : userId
@@ -307,7 +307,7 @@
 			cid : cid,
 			url : $("#urlId").val(),
 		}
-		var purl = "comment/doInsertComment";
+		var purl = "admin/comment/doInsertComment";
 		$.post(purl, params, function(result) {
 			if (result.state == 1) {
 				alert(result.message)
@@ -352,7 +352,7 @@
 			userId : userId,
 			contentsId : cid,
 		}
-		var url = "user/doCollect";
+		var url = "admin/user/doCollect";
 		$.post(url, params, function(result) {
 			if (result.message == "收藏成功") {
 				$("#shoucang").text("取消收藏");
@@ -435,7 +435,7 @@
 		window.location.href = "Index";
 	}
 	function doGetContent(cid) {
-		var url = "doContentUI";
+		var url = "admin/doContentUI";
 		var params = {
 			"cid" : cid
 		};
@@ -453,7 +453,7 @@
 	}
 
 	function doPreContent(cid) {
-		var url = "doPreContents";
+		var url = "admin/doPreContents";
 		var params = {};
 		params['cid'] = cid;
 		$.getJSON(url, params, function(result) {
@@ -465,7 +465,7 @@
 		})
 	}
 	function doNextContents(cid) {
-		var url = "doNextContents";
+		var url = "admin/doNextContents";
 		var params = {};
 		params['cid'] = cid;
 		$.getJSON(url, params, function(result) {
@@ -479,7 +479,7 @@
 	}
 
 	function doCommented(cid){
-		var url = "/comment/doCommentedById"
+		var url = "admin/comment/doCommentedById"
 		var params ={};
 		params['cid'] = cid;
 		$.getJSON(url, params, function(result){
@@ -495,7 +495,7 @@
 	}
 
 	function doInitFormData(cid) {
-		var url = "user/docheck";
+		var url = "admin/user/docheck";
 		var userId = getCookie("userId");
 		var params = {
 			"userId" : userId,

@@ -1,6 +1,6 @@
 package com.cy.pj.serviceimpl;
 
-import java.io.IOException;
+import java.net.ConnectException;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
@@ -37,8 +37,9 @@ public class ContentsServiceImpl implements ContentsService{
 				contents=contentsDao.findContentById(cid);
 				esSearchService.saveOrUpdate(new SearchVo(contents.getCid(), JSON.toJSONString(contents)));
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			contents=contentsDao.findContentById(cid);
+			return contents;
 		}
 		return contents;
 	}

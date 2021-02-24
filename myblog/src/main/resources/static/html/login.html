@@ -37,7 +37,7 @@
 			username:$("#usernameId").val(),
 			password:$("#passwordId").val(),
 		}
-		var url="user/doLogin";
+		var url="/admin/user/doLogin";
 		$.post(url,params,function(result){
 			// doZtFind();
 			if(result.state==1){
@@ -46,16 +46,18 @@
 				setCookie("userId", result.data.id);//存userId存入Cookie中
 				location.href="doindex?t="+Math.random();
 			}else{
-				$(".login-box-msg").html(result.message);
-				layer.msg('用户名或密码错误,请重新输入', {icon: 2});
-				// alert("用户名或密码错误,请重新输入")
+				if (result.message) {
+					alert(result.message);
+				}else {
+					alert("用户名或密码错误,请重新输入");
+				}
 			}
 			return false;//防止刷新时重复提交
 		});
 	}
 
 	function doZtFind(){
-		var url="user/doFindUser";
+		var url="admin/user/doFindUser";
 		var params={username:$("#usernameId").val()};
 		$.post(url,params,function(result){
 			if(result.state==1) {
@@ -69,7 +71,7 @@
 
 	function ifAdmin(params) {
 		$.ajax({
-			url:"user/ifAdmin",
+			url:"admin/user/ifAdmin",
 			type:"get",
 			data:{"param":params},
 			success:function(result){

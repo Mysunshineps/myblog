@@ -57,14 +57,14 @@ public class SpringShiroConfig {
 	    fm.put("/doReg", "anon");
 	    fm.put("/doSingle", "anon");
 	    fm.put("/Index", "anon");
-	    fm.put("/user/doLogin", "anon");
-	    fm.put("/user/doRegister", "anon");
-	    fm.put("/user/doSignOut", "anon");
-	    fm.put("/user/doProFile", "anon");
-	    fm.put("/user/doFindUser", "anon");
-	    fm.put("/user/doFindUserId", "anon");
-	    fm.put("/comment/doInsertComment", "anon");
-	    fm.put("/user/doLoadIndexUI", "anon");
+	    fm.put("/admin/user/doLogin", "anon");
+	    fm.put("/admin/user/doRegister", "anon");
+	    fm.put("/admin/user/doSignOut", "anon");
+	    fm.put("/admin/user/doProFile", "anon");
+	    fm.put("/admin/user/doFindUser", "anon");
+	    fm.put("/admin/user/doFindUserId", "anon");
+	    fm.put("/admin/comment/doInsertComment", "anon");
+	    fm.put("/admin/user/doLoadIndexUI", "anon");
 
 	    //设置必须认证才可以访问的资源
 	    fm.put("/**", "user");

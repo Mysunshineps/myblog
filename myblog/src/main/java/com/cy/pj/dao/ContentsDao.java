@@ -19,7 +19,6 @@ public interface ContentsDao {
 	
 	Contents findNextContent(Integer cid);
 	
-	@Select("select contents_id from usercontents where user_id=#{userId}")
 	List<Integer> findContentsByuserId(Integer userId);
 
 	List<Contents> findCollects(List<Integer> contentIds);

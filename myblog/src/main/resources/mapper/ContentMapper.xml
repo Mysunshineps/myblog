@@ -13,7 +13,11 @@
 	<select id="findNextContent" resultType="com.cy.pj.entity.Contents">
 		select * from contents where cid=(select min(cid) from contents where cid>#{cid})
 	</select>
-	
+
+	<select id="findContentsByuserId" parameterType="integer" resultType="list">
+		select contents_id from usercontents where user_id=#{userId}
+	</select>
+
 	<select id="findContentById" resultType="com.cy.pj.entity.Contents">
 		select cid,title,titlePic,content,FROM_UNIXTIME(created,'%Y-%m-%d %H:%i:%s') as created from contents where cid=#{cid}
 	</select>

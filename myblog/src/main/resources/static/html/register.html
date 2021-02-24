@@ -177,7 +177,7 @@
 			password:$("#passwordId").val(),
 			repassword:$("#repasswordId").val(),
 		}
-		var url="user/doRegister";
+		var url="admin/user/doRegister";
 		$.post(url,params,function(result){
 			if(result.state==1){
 				alert(result.message);

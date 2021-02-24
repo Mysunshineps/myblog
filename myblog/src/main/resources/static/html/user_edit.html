@@ -126,7 +126,7 @@
 		var fd = new FormData();
 		fd.append("uploadFile" , pic);
 		$.ajax({
-			url: "file/upload/headImage",
+			url: "admin/file/upload/headImage",
 			type: "POST",
 			data: fd,
 			processData: false,
@@ -144,7 +144,7 @@
 		var fd1 = new FormData();
 		fd1.append("uploadFile" , pic1);
 		$.ajax({
-			url: "file/upload/homeImage",
+			url: "admin/file/upload/homeImage",
 			type: "POST",
 			data: fd1,
 			async:false,//同步
@@ -168,7 +168,7 @@
 			repassword : $("#rePasswordId").val()
 		}
 		//2.发起异步请求
-		var updateUrl = "user/doUpdateObject";
+		var updateUrl = "admin/user/doUpdateObject";
 		$.post(updateUrl, params, function(result) {
 			if (result.state == 1) {
 				doCancel();
@@ -182,7 +182,7 @@
 	function doInitFormData() {
 		var userId = getCookie("userId");
 		$.ajax({
-			url : "user/doFindUserId",
+			url : "admin/user/doFindUserId",
 			type : "post",
 			data : {
 				"id" : userId

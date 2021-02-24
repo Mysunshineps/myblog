@@ -126,7 +126,7 @@
 		var userZtId=getCookie("userId");//从Cookie中取userId,并赋值给userZtId
 		//alert(username)
 		$.ajax({
-			url:"user/doFindUserId",
+			url:"admin/user/doFindUserId",
 			type:"post",
 			data:{"id":userZtId},
 			success:function(result){
@@ -160,7 +160,7 @@
 		window.location.href="Index";
 	}
 	$(function(){
-		var url="user/doFindUserId";
+		var url="admin/user/doFindUserId";
 		var userId=getCookie("userId");
 		//alert(userId)
 		var params={"id":userId}
@@ -176,7 +176,7 @@
 	$(function(){
 		var userId=getCookie("userId");
 		var params={"userId":userId};
-		var url="comment/doFindAllComment";
+		var url="admin/comment/doFindAllComment";
 		$.getJSON(url,params,function(result){
 			var html="";
 			for(var i=0;i<result.length;i++)
@@ -197,12 +197,12 @@
 		var userId=getCookie("userId");
 		//alert(userId);
 		setCookie("cid",cid);
-		window.location="doLoadContentUI";
+		window.location="doSingle";
 	}
 
 	function deleteComment(a){
 		var coid = $(a).attr("name");
-		var url = "/comment/deleteComment/";
+		var url = "admin//comment/deleteComment/";
 		var params = {
 			coid : coid,
 		}

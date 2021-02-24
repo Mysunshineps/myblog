@@ -9,7 +9,7 @@ import com.cy.pj.entity.Contents;
 import com.cy.pj.service.ContentsService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class ContentsController {
 	@Autowired
 	private ContentsService contentsService;

@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cy.pj.service.FileService;
 
 @Controller
-@RequestMapping("/file")
+@RequestMapping("/admin/file")
 public class FileController {
 	@Autowired
 	private FileService fileService;

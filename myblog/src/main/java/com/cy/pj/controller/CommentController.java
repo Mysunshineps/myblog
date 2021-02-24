@@ -19,7 +19,7 @@ import com.cy.pj.service.CommentService;
 
 
 @Controller
-@RequestMapping("/comment/")
+@RequestMapping("/admin/comment")
 public class CommentController {
 	@Autowired
 	private CommentService commentService;

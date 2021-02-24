@@ -100,7 +100,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User findUserById(Integer id) {
-		return userDao.findUserById(id);
+		User user = userDao.findUserById(id);
+		return user;
 	}
 	@Override
 	public List<Contents> doFindAllContents() {

@@ -15,11 +15,17 @@
   		(#{cid},#{author},#{created},#{content},#{mail},#{url},#{userId})
   </insert>
 
+	<select id="doCommentedById" parameterType="integer" resultType="map">
+		select c.content,c.created,u.username from comments c LEFT JOIN user u ON u.id = c.userId where c.cid = #{cid} order by c.created desc
+	</select>
 
 	<select id="findCommentsByUserId" resultType="com.cy.pj.entity.CommentTemp">
 		SELECT a.coid,a.cid,b.title,substr(a.content,1,100) content,a.created from comments a LEFT JOIN contents b ON a.cid = b.cid where a.userId = #{userId} ORDER BY a.created DESC
 	</select>
 
+	<delete id="deleteComment" parameterType="integer">
+		delete from comments where coid = #{coid}
+	</delete>
 
 
 
