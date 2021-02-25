@@ -29,7 +29,7 @@ public interface UserService {
 
 	String doCheck(Integer userId, Integer contentsId);
 
-	List<Contents> doFindAllCollect(Integer userId);
+	List<Contents> selectAllCollect(Integer userId);
 
 	void uploadImage(Map<String, String> params);
 

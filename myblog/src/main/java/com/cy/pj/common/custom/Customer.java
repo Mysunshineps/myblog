@@ -1,4 +1,4 @@
-package com.cy.pj.common.interceptor;
+package com.cy.pj.common.custom;
 
 import com.alibaba.fastjson.JSON;
 
@@ -47,6 +47,16 @@ public class Customer implements Serializable {
      */
     @Column(name = "datasource_password")
     private String datasourcePassword;
+
+    @Column(name = "spring_datasource_slave_url")
+    private String springDatasourceSlaveUrl;
+
+
+    @Column(name = "spring_datasource_slave_username")
+    private String springDatasourceSlaveUsername;
+
+    @Column(name = "spring_datasource_slave_password")
+    private String springDatasourceSlavePassword;
 
     /**
      * 默认0 状态：1：启用，0：禁用
@@ -155,5 +165,29 @@ public class Customer implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSpringDatasourceSlaveUrl() {
+        return springDatasourceSlaveUrl;
+    }
+
+    public void setSpringDatasourceSlaveUrl(String springDatasourceSlaveUrl) {
+        this.springDatasourceSlaveUrl = springDatasourceSlaveUrl;
+    }
+
+    public String getSpringDatasourceSlaveUsername() {
+        return springDatasourceSlaveUsername;
+    }
+
+    public void setSpringDatasourceSlaveUsername(String springDatasourceSlaveUsername) {
+        this.springDatasourceSlaveUsername = springDatasourceSlaveUsername;
+    }
+
+    public String getSpringDatasourceSlavePassword() {
+        return springDatasourceSlavePassword;
+    }
+
+    public void setSpringDatasourceSlavePassword(String springDatasourceSlavePassword) {
+        this.springDatasourceSlavePassword = springDatasourceSlavePassword;
     }
 }

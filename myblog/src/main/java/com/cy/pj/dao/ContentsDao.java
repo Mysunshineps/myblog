@@ -19,8 +19,8 @@ public interface ContentsDao {
 	
 	Contents findNextContent(Integer cid);
 	
-	List<Integer> findContentsByuserId(Integer userId);
+	List<Integer> selectIdsByUserId(Integer userId);
 
-	List<Contents> findCollects(List<Integer> contentIds);
+	List<Contents> selectCollects(List<Integer> contentIds);
 	
 }

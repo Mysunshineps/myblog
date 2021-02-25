@@ -1,4 +1,4 @@
-package com.cy.pj.common.interceptor;
+package com.cy.pj.common.custom;
 
 import com.cy.pj.common.exception.NoSuchCustomerException;
 import com.cy.pj.sys.utils.SpringUtils;

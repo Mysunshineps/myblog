@@ -37,7 +37,7 @@ public class CustomerThreadLocal {
         }
     };
 
-    public static  Object getInfo(LocalName name){
+    public static Object getInfo(LocalName name){
         Map<LocalName, Object> map = customThreadLocal.get();
         if (map == null){
             return null;
@@ -107,6 +107,34 @@ public class CustomerThreadLocal {
      */
     public static String getCustomerNo(){
         return (String) getInfo(LocalName.CUSTOMER_NO);
+    }
+
+    /**
+     * 获取副本中 主从数据库标识
+     * @return
+     */
+    public static Integer getDataSourceType(){
+        return (Integer) getInfo(LocalName.DATA_SOURCE_TYPE);
+    }
+
+    /**
+     * 设置副本中 主从数据库标识 master,slave
+     * @return
+     */
+    public static void setDataSourceType(int type){
+        setInfo(LocalName.DATA_SOURCE_TYPE,type);
+    }
+
+    /**
+     * 移除 主从库设置
+     * @return
+     */
+    public static void removeDataSourceType(){
+        Map<LocalName, Object> map = customThreadLocal.get();
+        if (map == null){
+            return;
+        }
+        map.remove(LocalName.DATA_SOURCE_TYPE);
     }
 
     /**

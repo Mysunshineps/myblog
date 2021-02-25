@@ -12,6 +12,11 @@ public enum LocalName {
     CUSTOMER_NO,
 
     /**
+     * 主从数据库标识
+     */
+    DATA_SOURCE_TYPE,
+
+    /**
      * 平台启用设置
      */
     BASICS_PLATFORM,

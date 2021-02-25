@@ -18,7 +18,9 @@ public class SpringWebConfig
 	   InterceptorRegistry registry) {
 	   System.out.println("==add CustomerInterceptor==");
 	   registry.addInterceptor(new CustomerInterceptor())
-	   .addPathPatterns("/admin/**");
+	   .addPathPatterns("/admin/**")
+	   .excludePathPatterns("/admin/customer/**")
+	   .order(1);
 	}
 
 	 @SuppressWarnings({ "rawtypes", "unchecked" })

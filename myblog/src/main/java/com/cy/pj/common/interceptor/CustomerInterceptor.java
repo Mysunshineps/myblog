@@ -1,5 +1,6 @@
 package com.cy.pj.common.interceptor;
 
+import com.cy.pj.common.custom.CustomerApi;
 import com.cy.pj.sys.utils.Tools;
 import com.cy.pj.thread.threadlocal.CustomerThreadLocal;
 import org.apache.commons.lang3.StringUtils;

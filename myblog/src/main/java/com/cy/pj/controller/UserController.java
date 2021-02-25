@@ -128,7 +128,7 @@ public class UserController {
 	@RequestMapping("doFindAllCollect")
 	@ResponseBody
 	public List<Contents> doFindAllCollect(Integer userId) {
-		return userService.doFindAllCollect(userId);
+		return userService.selectAllCollect(userId);
 	}
 
 

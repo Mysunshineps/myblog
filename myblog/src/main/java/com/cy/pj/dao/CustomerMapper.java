@@ -1,6 +1,6 @@
 package com.cy.pj.dao;
 
-import com.cy.pj.common.interceptor.Customer;
+import com.cy.pj.common.custom.Customer;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

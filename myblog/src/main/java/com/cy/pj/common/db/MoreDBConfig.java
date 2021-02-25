@@ -1,7 +1,9 @@
 package com.cy.pj.common.db;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.cy.pj.common.interceptor.Customer;
+import com.cy.pj.common.custom.Customer;
+import com.cy.pj.dao.enums.Constants;
+import com.cy.pj.entity.DataSourceType;
 import com.cy.pj.sys.utils.SpringUtils;
 import com.github.pagehelper.PageInterceptor;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +23,8 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -118,11 +122,18 @@ public class MoreDBConfig {
     @PostConstruct
     public void  init() {
         try {
+            String customNo = StringUtils.isBlank(independentCustomerNo) ? "blog_saas" : independentCustomerNo;
             masterDataSource = masterDataSource();
-            SpringUtils.setBeanForName("masterDataSource",masterDataSource);
-            MyAbstractRoutingDataSource.putDataSource(StringUtils.isBlank(independentCustomerNo) ? "blog_saas" : independentCustomerNo,masterDataSource);
+            SpringUtils.setBeanForName("masterDataSource"+ Constants.UNDERLINE+ customNo,masterDataSource);
+            Map<Object, Object> targetDataSources = new HashMap<>();
+            targetDataSources.put(customNo+"_"+ DataSourceType.MASTER.getType(),masterDataSource);
+            if (StringUtils.isNotBlank(slaveUsername)){
+                DataSource salveDataSource = salveDataSource();
+                targetDataSources.put(customNo + "_" + DataSourceType.SALVE.getType(),salveDataSource);
+                SpringUtils.setBeanForName("salveDataSource"+ Constants.UNDERLINE+ customNo,salveDataSource);
+            }
 
-            AbstractRoutingDataSource routingDataSource = routingDataSource();
+            AbstractRoutingDataSource routingDataSource = routingDataSource(targetDataSources);
             SpringUtils.setBeanForClass(AbstractRoutingDataSource.class,routingDataSource);
 
             SqlSessionFactory sqlSessionFactory = sqlSessionFactory(routingDataSource);
@@ -136,22 +147,36 @@ public class MoreDBConfig {
     }
 
     /**
-     * 初始化客户数据源
+     * 初始化客户数据源 主库
      * @param customer
      */
-    public void initCustomerDB(Customer customer){
-        logger.info("Ready to initialize data source: "+customer.getCustomerNo());
+    public void initCustomerMasterDB(Customer customer){
+        logger.info("Ready to initialize master data source: "+customer.getCustomerNo());
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(customer.getDatasourceUrl());
         datasource.setUsername(customer.getDatasourceUsername());
         datasource.setPassword(customer.getDatasourcePassword());
         datasource.setDriverClassName(driverClassName);
         DataSource dataSource = getDataSource(datasource);
-        SpringUtils.setBeanForName("masterDataSource"+"_"+customer.getCustomerNo(),dataSource);
-        MyAbstractRoutingDataSource.putDataSource(customer.getCustomerNo(),dataSource);
+        SpringUtils.setBeanForName("masterDataSource"+ Constants.UNDERLINE+ customer.getCustomerNo(),dataSource);
+        MyAbstractRoutingDataSource.putDataSource(customer.getCustomerNo()+ Constants.UNDERLINE+ DataSourceType.MASTER.getType(),dataSource);
     }
 
-
+    /**
+     * 初始化客户数据源 从库
+     * @param customer
+     */
+    public void initCustomerSalveDB(Customer customer){
+        logger.info("Ready to initialize slave data source: "+customer.getCustomerNo());
+        DruidDataSource datasource = new DruidDataSource();
+        datasource.setUrl(customer.getSpringDatasourceSlaveUrl());
+        datasource.setUsername(customer.getSpringDatasourceSlaveUsername());
+        datasource.setPassword(customer.getSpringDatasourceSlavePassword());
+        datasource.setDriverClassName(driverClassName);
+        DataSource dataSource = getDataSource(datasource);
+        SpringUtils.setBeanForName("salveDataSource"+ Constants.UNDERLINE+ customer.getCustomerNo(),dataSource);
+        MyAbstractRoutingDataSource.putDataSource(customer.getCustomerNo()+ Constants.UNDERLINE+ DataSourceType.SALVE.getType(),dataSource);
+    }
 
     /**
      * 主数据库设置
@@ -213,9 +238,10 @@ public class MoreDBConfig {
      * 设置数据源路由，通过该类中的determineCurrentLookupKey决定使用哪个数据源
      */
     @Bean
-    public AbstractRoutingDataSource routingDataSource() {
+    public AbstractRoutingDataSource routingDataSource(Map<Object, Object> targetDataSources) {
         MyAbstractRoutingDataSource proxy = new MyAbstractRoutingDataSource();
         //targetDataSources 数据源集合 以key 判断数据源
+        MyAbstractRoutingDataSource.DATASOURCES.putAll(targetDataSources);
         proxy.setDefaultTargetDataSource(masterDataSource);
         proxy.setTargetDataSources(MyAbstractRoutingDataSource.getDatasources());
         return proxy;
@@ -254,7 +280,4 @@ public class MoreDBConfig {
     public DataSourceTransactionManager dataSourceTransactionManager(AbstractRoutingDataSource routingDataSource) {
         return new DataSourceTransactionManager(routingDataSource);
     }
-
-
-
 }

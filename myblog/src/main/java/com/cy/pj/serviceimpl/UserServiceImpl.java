@@ -148,14 +148,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<Contents> doFindAllCollect(Integer userId) {
+	public List<Contents> selectAllCollect(Integer userId) {
 		String redisKey = RedisKey.collects.COLLECTS + userId;
 		List<Contents> list = stringRedisService.getCollectList(redisKey);
 		if (null != list && !list.isEmpty()){
 			return list;
 		}else {
-			List<Integer> contentIds = contentsDao.findContentsByuserId(userId);
-			list = contentsDao.findCollects(contentIds);
+			List<Integer> contentIds = contentsDao.selectIdsByUserId(userId);
+			list = contentsDao.selectCollects(contentIds);
 			stringRedisService.set(redisKey,list,10*1000L);
 		}
 		return list;
