@@ -1,4 +1,5 @@
 ### 个人博客：包括登录、注册、修改个人信息、评论、收藏、上传图片、支付打赏、地图等功能
+技术：redis、es、saas化、数据库读写分离等，持续更新中
 
 数据库见：项目下myblog\src\main\resources\blog.sql，直接用navicat导入可用
 
