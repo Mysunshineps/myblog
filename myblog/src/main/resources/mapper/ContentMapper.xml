@@ -22,14 +22,13 @@
 		select cid,title,titlePic,content,FROM_UNIXTIME(created,'%Y-%m-%d %H:%i:%s') as created from contents where cid=#{cid}
 	</select>
 		
-	<select id="selectCollects" resultType="com.cy.pj.entity.Contents">
-		select cid,titlePic,from_unixtime(created) created,title,substr(content,1,70) content from contents
-		where cid in 
-		<foreach collection="list" item="contentId" open="(" separator="," close=")">
-			#{contentId}
-		</foreach>
-		 order by created desc
+	<select id="selectCollectsByUseId" parameterType="integer" resultType="com.cy.pj.entity.Contents">
+	SELECT c.cid,c.titlePic,from_unixtime( c.created ) created,c.title,substr( c.content, 1, 70 ) content
+	FROM contents c
+	LEFT JOIN usercontents uc ON uc.contents_id = c.cid
+	WHERE
+		uc.user_id = #{userId}
+	ORDER BY created DESC
 	</select>
-	
 
 </mapper>

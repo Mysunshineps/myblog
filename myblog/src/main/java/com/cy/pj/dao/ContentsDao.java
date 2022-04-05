@@ -21,6 +21,6 @@ public interface ContentsDao {
 	
 	List<Integer> selectIdsByUserId(Integer userId);
 
-	List<Contents> selectCollects(List<Integer> contentIds);
+	List<Contents> selectCollectsByUseId(Integer userId);
 	
 }

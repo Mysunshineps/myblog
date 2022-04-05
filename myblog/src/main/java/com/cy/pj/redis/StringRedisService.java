@@ -28,7 +28,7 @@ public class StringRedisService {
     @Resource(name = "redisTemplate")
     private ValueOperations<String, Object> vOps;
 
-    private String redisKey = "blog";
+    private String redisKey = "blog_";
 
     /**
      * 设置值
@@ -141,6 +141,20 @@ public class StringRedisService {
             Object value = this.get(key);
             if(null != value){
                 res = (List<Contents>) value;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    //获取 文章内容详情
+    public Contents getContent(String key){
+        Contents res = null;
+        try{
+            Object value = this.get(key);
+            if(null != value){
+                res = (Contents) value;
             }
         }catch (Exception e){
             e.printStackTrace();

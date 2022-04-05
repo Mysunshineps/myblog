@@ -1,14 +1,12 @@
 package com.cy.pj.serviceimpl;
 
-import java.net.ConnectException;
 import java.util.List;
 
-import com.alibaba.fastjson.JSON;
-import com.cy.pj.es.model.SearchVo;
-import com.cy.pj.es.service.EsSearchServiceImpl;
-import org.apache.commons.lang3.StringUtils;
+import com.cy.pj.common.custom.CustomerApi;
+import com.cy.pj.dao.enums.Constants;
+import com.cy.pj.redis.RedisKey;
+import com.cy.pj.redis.StringRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cy.pj.dao.ContentsDao;
@@ -21,25 +19,22 @@ public class ContentsServiceImpl implements ContentsService{
 	private ContentsDao contentsDao;
 
 	@Autowired
-	private RedisTemplate redisTemplate;
-
-	@Autowired
-	private EsSearchServiceImpl esSearchService;
+	private StringRedisService stringRedisService;
 
 	@Override
 	public Contents findContentById(Integer cid) {
 		Contents contents = new Contents();
 		try {
-			SearchVo searchVo = esSearchService.selectContentById(cid + "");
-			if (null != searchVo && StringUtils.isNotBlank(searchVo.getContents())){
-				contents = JSON.parseObject(searchVo.getContents(), Contents.class);
-			}else {
-				contents=contentsDao.findContentById(cid);
-				esSearchService.saveOrUpdate(new SearchVo(contents.getCid(), JSON.toJSONString(contents)));
+			String redisKey = RedisKey.contents.CONTENTS_INFO + CustomerApi.getCustomerNo()+ Constants.UNDERLINE +cid;
+			contents = stringRedisService.getContent(redisKey);
+			if (null != contents){
+				return contents;
 			}
+			contents = contentsDao.findContentById(cid);
+			stringRedisService.set(redisKey,contents,10*1000L);
 		} catch (Exception e) {
-			contents=contentsDao.findContentById(cid);
-			return contents;
+			e.printStackTrace();
+			contents = contentsDao.findContentById(cid);
 		}
 		return contents;
 	}

@@ -20,8 +20,8 @@ import java.lang.reflect.Method;
  * @CreateDate:     2021/2/25 15:19
  * @Version:        1.0
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class ReadWriteInterceptor implements Ordered {
 
     @Override

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.cy.pj.common.custom.CustomerApi;
+import com.cy.pj.dao.enums.Constants;
 import com.cy.pj.redis.RedisKey;
 import com.cy.pj.redis.StringRedisService;
 import org.apache.shiro.SecurityUtils;
@@ -120,6 +122,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public String doinsertCollect(Integer userId, Integer contentsId) {
 		int rows = userDao.docheck(userId,contentsId);
+		String redisKey = RedisKey.collects.COLLECTS + CustomerApi.getCustomerNo()+ Constants.UNDERLINE +userId;
+		stringRedisService.delete(redisKey);
 		if(rows==0) {
 			int row = userDao.insertCollect(userId,contentsId);
 			if(row==0) {
@@ -149,13 +153,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<Contents> selectAllCollect(Integer userId) {
-		String redisKey = RedisKey.collects.COLLECTS + userId;
+		String redisKey = RedisKey.collects.COLLECTS + CustomerApi.getCustomerNo()+ Constants.UNDERLINE +userId;
 		List<Contents> list = stringRedisService.getCollectList(redisKey);
 		if (null != list && !list.isEmpty()){
 			return list;
 		}else {
-			List<Integer> contentIds = contentsDao.selectIdsByUserId(userId);
-			list = contentsDao.selectCollects(contentIds);
+			list = contentsDao.selectCollectsByUseId(userId);
 			stringRedisService.set(redisKey,list,10*1000L);
 		}
 		return list;

@@ -24,6 +24,7 @@ public class CustomerInterceptor extends HandlerInterceptorAdapter {
     private static final String NO_CUSTOMER = "/static/html/noCustomer.html";
 
     private static final String END_STR = ".psqweb.com";
+    private static final String PRE_STR = "blog_";
 
     /**
      * 进入Handler方法之后，返回ModelAndView之前执行
@@ -75,8 +76,10 @@ public class CustomerInterceptor extends HandlerInterceptorAdapter {
             }else {
                 // 请求URL 域名
                 String serverName = request.getServerName();
+                System.out.println("serverName:"+serverName);
                 customerNo = Tools.cutStr(serverName, END_STR);
-                customerNo = "blog_" + customerNo;
+                customerNo = PRE_STR + customerNo;
+                System.out.println("customerNo:"+customerNo);
                 // 校验客户
                 boolean b = CustomerApi.getInstance().checkCustomerNo(customerNo);
                 if (!b){

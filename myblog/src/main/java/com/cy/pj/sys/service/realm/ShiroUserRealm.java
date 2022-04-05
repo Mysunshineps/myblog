@@ -44,8 +44,7 @@ public class ShiroUserRealm extends AuthorizingRealm {
 		(UsernamePasswordToken)token;
 		String username=upToken.getUsername();
 		//2.基于用户名查询数据库
-		User user=
-		userDao.findUserByUserName(username);
+		User user = userDao.findUserByUserName(username);
 		//3.判定用户是否存在
 		if(user==null)
 		throw new UnknownAccountException();
